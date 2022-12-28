@@ -2,8 +2,10 @@ local tele = require "telescope"
 tele.setup({})
 tele.load_extension("fzf")
 tele.load_extension("file_browser")
+tele.load_extension("aerial")
 
 local utils = require "utils"
+utils.map("n","<Leader>tR","<Cmd>Telescope aerial theme=ivy<CR>")
 utils.map("n", "<Leader>tf", [[<Cmd>lua require("utils").project_file_finder()<CR>]])
 utils.map("n", "<Leader>tb", [[<Cmd>lua require("utils").project_file_manager()<CR>]])
 utils.map("n", "<Leader>tm", [[<Cmd>lua require("utils").home_file_manager()<CR>]])

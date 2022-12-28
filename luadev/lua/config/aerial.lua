@@ -1,10 +1,13 @@
 require("aerial").setup({
-	backends = { "treesitter", "lsp" },
-	on_attach = function(bufnr)
-		vim.api.nvim_buf_set_keymap(
-			bufnr, "n", "<Leader>tt",
-			"<Cmd>AerialToggle<CR>",
-			{ noremap = true, silent = true }
-		)
-	end
+  backends = { "treesitter", "lsp" },
 })
+vim.keymap.set(
+  "n", "<Leader>tt",
+  "<Cmd>AerialToggle<CR>",
+  { noremap = true, silent = true }
+)
+vim.keymap.set(
+  "n", "<Leader>ac",
+  "<Cmd>AerialCloseAll<CR>",
+  { noremap = true, silent = true }
+)
