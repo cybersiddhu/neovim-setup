@@ -1,7 +1,6 @@
 require("nvim-tree").setup {
   disable_netrw = true,
   hijack_netrw = true,
-  update_to_buf_dir = { enable = false },
   filters = {
     custom = { ".git" },
   },
