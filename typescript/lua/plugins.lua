@@ -149,6 +149,7 @@ return require("packer").startup(function(use)
       require("config.nvim-tree")
     end,
   }
+  use { "elihunter173/dirbuf.nvim" }
   -- extra plugin for formatting
   use { "jose-elias-alvarez/null-ls.nvim",
     config = function()
