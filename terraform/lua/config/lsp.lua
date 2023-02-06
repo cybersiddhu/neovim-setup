@@ -6,7 +6,6 @@ vim.keymap.set('n', ']c', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setqflist, opts)
 vim.keymap.set('n', '<space>l', vim.diagnostic.setloclist, opts)
 
-local ih = require("inlay-hints")
 local nvim_lsp = require "lspconfig"
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
 local buf_set_keymap = vim.keymap.set
@@ -40,7 +39,6 @@ end
 local on_attach_gopls = function(client, bufnr)
   client.server_capabilities.documentFormattingProvider = false
   keymaps_on_attach(bufnr)
-  ih.on_attach(client, bufnr)
 end
 nvim_lsp.gopls.setup {
   on_attach = on_attach_gopls,
@@ -64,6 +62,40 @@ nvim_lsp.gopls.setup {
       },
     },
   }
+}
+-- on attach callback for lsp typescript server
+local on_attach_tsserver = function(client, bufnr)
+  client.server_capabilities.documentFormattingProvider = false
+  keymaps_on_attach(bufnr)
+end
+-- typescript server setup
+nvim_lsp.tsserver.setup {
+  on_attach = on_attach_tsserver,
+  capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  settings = {
+    javascript = {
+      inlayHints = {
+        includeInlayEnumMemberValueHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayVariableTypeHints = true,
+      },
+    },
+    typescript = {
+      inlayHints = {
+        includeInlayEnumMemberValueHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayVariableTypeHints = true,
+      },
+    },
+  },
 }
 nvim_lsp.vimls.setup {
   on_attach = require("aerial").on_attach

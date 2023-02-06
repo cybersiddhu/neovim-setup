@@ -92,7 +92,11 @@ local rainbow = {
   max_file_lines = nil,
 }
 tree_config.setup {
-  ensure_installed = { "go", "dockerfile", "gomod", "json", "markdown", "toml", "vim", "yaml", "terraform" },
+  ensure_installed = {
+    "go", "dockerfile", "gomod",
+    "json", "markdown", "toml",
+    "vim", "yaml", "terraform", "typescript"
+  },
   highlight = { enable = true },
   incremental_selection = { enable = true },
   indent = { enable = true },
