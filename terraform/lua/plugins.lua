@@ -140,8 +140,11 @@ return require("packer").startup(function(use)
   }
   -- file explorer
   use { "kyazdani42/nvim-tree.lua",
-    config = [[require("config.nvim-tree")]]
+    config = function()
+      require("config.nvim-tree")
+    end,
   }
+  use { "elihunter173/dirbuf.nvim" }
   -- extra plugin for formatting
   use { "jose-elias-alvarez/null-ls.nvim",
     config = function()
@@ -155,5 +158,5 @@ return require("packer").startup(function(use)
     end,
   }
   -- vim ui interface
-  use { "stevearc/dressing.nvim"}
+  use { "stevearc/dressing.nvim" }
 end)
