@@ -182,4 +182,18 @@ return require("packer").startup(function(use)
       require("utils").map("n", "<Leader>sw", [[<Cmd>lua require("integration.stackoverflow").open_split()<CR>]])
     end
   }
+  -- gpt
+  use {
+    "jackMort/ChatGPT.nvim",
+    requires = "MunifTanjim/nui.nvim",
+    config = function()
+      require("chatgpt").setup()
+    end,
+  }
+  use {
+    "james1236/backseat.nvim",
+    config = function()
+      require("backseat").setup()
+    end
+  }
 end)
