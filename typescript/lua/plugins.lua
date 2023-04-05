@@ -185,5 +185,10 @@ return require("packer").startup(function(use)
     end,
   }
   -- gpt
-  use { "aduros/ai.vim" }
+  use({
+    "jackMort/ChatGPT.nvim",
+    config = function()
+      require("chatgpt").setup()
+    end,
+  })
 end)
