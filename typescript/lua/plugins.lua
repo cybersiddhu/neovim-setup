@@ -185,10 +185,16 @@ return require("packer").startup(function(use)
     end,
   }
   -- gpt
-  use({
+  use {
     "jackMort/ChatGPT.nvim",
     config = function()
       require("chatgpt").setup()
     end,
-  })
+  }
+  use {
+    "james1236/backseat.nvim",
+    config = function()
+      require("backseat").setup()
+    end
+  }
 end)
