@@ -159,4 +159,18 @@ return require("packer").startup(function(use)
   }
   -- vim ui interface
   use { "stevearc/dressing.nvim" }
+  -- gpt
+  use {
+    "jackMort/ChatGPT.nvim",
+    requires = "MunifTanjim/nui.nvim",
+    config = function()
+      require("chatgpt").setup()
+    end,
+  }
+  use {
+    "james1236/backseat.nvim",
+    config = function()
+      require("backseat").setup()
+    end
+  }
 end)
