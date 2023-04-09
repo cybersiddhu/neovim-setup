@@ -1,0 +1,10 @@
+[    
+    "dockerfile-language-server-nodejs",
+    "eslint",
+    "graphql-language-service-cli",
+    "typescript-language-server",
+    "vscode-langservers-extracted",
+    "yaml-language-server",
+    "commitizen",
+    "cz-conventional-changelog"
+]
