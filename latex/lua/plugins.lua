@@ -150,4 +150,5 @@ return require("packer").startup(function(use)
   --     require("config.null-ls")
   --   end,
   -- }
+  use { "wellle/targets.vim" }
 end)

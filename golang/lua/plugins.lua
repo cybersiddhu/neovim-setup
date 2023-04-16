@@ -196,4 +196,6 @@ return require("packer").startup(function(use)
       require("backseat").setup()
     end
   }
+  --text objects
+  use { "wellle/targets.vim" }
 end)

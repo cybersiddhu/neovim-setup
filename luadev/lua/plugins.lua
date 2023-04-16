@@ -174,4 +174,6 @@ return require("packer").startup(function(use)
       require("coding-assistant").setup()
     end
   }
+  --text objects
+  use { "wellle/targets.vim" }
 end)
