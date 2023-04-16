@@ -150,6 +150,4 @@ return require("packer").startup(function(use)
   --     require("config.null-ls")
   --   end,
   -- }
-  -- gpt
-  use { "aduros/ai.vim" }
 end)
