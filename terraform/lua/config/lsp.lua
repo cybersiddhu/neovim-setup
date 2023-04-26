@@ -29,7 +29,7 @@ end
 local on_attach = function(_, bufnr)
   keymaps_on_attach(bufnr)
 end
-for _, lsp in ipairs({ "golangci_lint_ls", "dockerls", "yamlls", "terraformls" }) do
+for _, lsp in ipairs({ "dockerls", "yamlls", "terraformls", "marksman" }) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
     capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
