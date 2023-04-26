@@ -93,7 +93,7 @@ local rainbow = {
 }
 tree_config.setup {
   ensure_installed = {
-    "go", "dockerfile", "gomod",
+    "dockerfile",
     "json", "markdown", "toml",
     "vim", "yaml", "terraform", "typescript"
   },
