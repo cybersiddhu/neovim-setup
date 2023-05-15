@@ -185,6 +185,9 @@ return require("packer").startup(function(use)
       require("backseat").setup()
     end
   }
+  use {
+    "Bryley/neoai.nvim",
+  }
   --text objects
   use { "wellle/targets.vim" }
 end)
