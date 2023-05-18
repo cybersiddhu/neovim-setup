@@ -187,6 +187,9 @@ return require("packer").startup(function(use)
   }
   use {
     "Bryley/neoai.nvim",
+    config = function()
+      require("neoai").setup()
+    end
   }
   --text objects
   use { "wellle/targets.vim" }
