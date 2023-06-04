@@ -95,7 +95,7 @@ tree_config.setup {
   ensure_installed = {
     "dockerfile",
     "json", "markdown", "toml",
-    "vim", "yaml", "terraform", "typescript"
+    "vim", "yaml", "terraform", "javascript", "tsx", "typescript"
   },
   highlight = { enable = true },
   incremental_selection = { enable = true },
