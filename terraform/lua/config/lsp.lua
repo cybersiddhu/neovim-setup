@@ -35,34 +35,6 @@ for _, lsp in ipairs({ "dockerls", "yamlls", "terraformls", "marksman" }) do
     capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
   }
 end
-
-local on_attach_gopls = function(client, bufnr)
-  client.server_capabilities.documentFormattingProvider = false
-  keymaps_on_attach(bufnr)
-end
-nvim_lsp.gopls.setup {
-  on_attach = on_attach_gopls,
-  capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
-  settings = {
-    gopls = {
-      codelenses = {
-        gc_details = true,
-        tidy = true,
-        upgrade_dependency = true,
-
-      },
-      hints = {
-        assignVariableTypes = true,
-        compositeLiteralFields = true,
-        compositeLiteralTypes = true,
-        constantValues = true,
-        functionTypeParameters = true,
-        parameterNames = true,
-        rangeVariableTypes = true,
-      },
-    },
-  }
-}
 -- on attach callback for lsp typescript server
 local on_attach_tsserver = function(client, bufnr)
   client.server_capabilities.documentFormattingProvider = false
