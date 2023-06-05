@@ -45,6 +45,7 @@ nvim_lsp.tsserver.setup {
   on_attach = on_attach_tsserver,
   capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
   settings = {
+    completions = { completeFunctionCalls = true },
     javascript = {
       inlayHints = {
         includeInlayEnumMemberValueHints = true,
