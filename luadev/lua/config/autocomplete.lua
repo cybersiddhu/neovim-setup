@@ -14,7 +14,7 @@ local function cjc()
 	if cmp.visible() then
 		cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
 	else
-		vim.api.nvim_feedkeys(t "<Down>", "n", true)
+		vim.api.nvim_feedkeys("<Down>", "n", true)
 	end
 end
 
@@ -30,7 +30,7 @@ local function ckc()
 	if cmp.visible() then
 		cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
 	else
-		vim.api.nvim_feedkeys(t "<Up>", "n", true)
+		vim.api.nvim_feedkeys("<Up>", "n", true)
 	end
 end
 
@@ -103,7 +103,8 @@ cmp.setup {
 	},
 	formatting = {
 		format = require("lspkind").cmp_format {
-			with_text = true,
+			mode = "symbol_text",
+      maxwidth = 50,
 			menu = {
 				nvim_lsp = "[LSP]",
 				luasnip = "[Snippet]",
