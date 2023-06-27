@@ -37,7 +37,6 @@ return require("packer").startup(function(use)
       config = "vim.cmd[[colorscheme nord]]",
     },
     { "stevearc/aerial.nvim",
-      branch = "nvim-0.5",
       config = [[require("config.aerial")]],
     },
   }
