@@ -19,7 +19,7 @@ return require("packer").startup(function(use)
       requires = { "b3nj5m1n/kommentary" },
       config = [[require("config.comment")]],
     },
-    { "lewis6991/nvim-treesitter-context",
+    { "nvim-treesitter/nvim-treesitter-context",
       after = "nvim-ts-context-commentstring",
       config = [[require("config.treesitter_context")]],
     }, -- works
@@ -121,7 +121,6 @@ return require("packer").startup(function(use)
   -- statusline
   use { "nvim-lualine/lualine.nvim",
     event = "VimEnter",
-    commit = "016a20711ee595a11426f9c1f4ab3e04967df553",
     config = [[require("config.lualine")]],
   }
   -- terminal
