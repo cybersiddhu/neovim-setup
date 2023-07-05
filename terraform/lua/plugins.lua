@@ -19,7 +19,7 @@ return require("packer").startup(function(use)
       requires = { "b3nj5m1n/kommentary" },
       config = [[require("config.comment")]],
     },
-    { "lewis6991/nvim-treesitter-context",
+    { "nvim-tressitter/nvim-treesitter-context",
       after = "nvim-ts-context-commentstring",
       config = [[require("config.treesitter_context")]],
     }, -- works
@@ -33,11 +33,9 @@ return require("packer").startup(function(use)
     },
     { "shaunsingh/nord.nvim",
       event = "VimEnter",
-      commit = "78f5f001709b5b321a35dcdc44549ef93185e024",
       config = "vim.cmd[[colorscheme nord]]",
     },
     { "stevearc/aerial.nvim",
-      branch = "nvim-0.5",
       config = [[require("config.aerial")]],
     },
   }
