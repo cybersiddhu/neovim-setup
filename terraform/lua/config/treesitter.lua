@@ -86,11 +86,6 @@ local refactor = {
     },
   },
 }
-local rainbow = {
-  enable = true,
-  extended_mode = true,
-  max_file_lines = nil,
-}
 tree_config.setup {
   ensure_installed = {
     "dockerfile",
@@ -102,7 +97,6 @@ tree_config.setup {
   indent = { enable = true },
   textobjects = text_objects,
   refactor = refactor,
-  rainbow = rainbow,
   autotag = { enable = true },
   context_commentstring = {
     enable = true,
