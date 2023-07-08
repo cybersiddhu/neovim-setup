@@ -1,8 +1,7 @@
 local cmd = vim.cmd  -- to execute Vim commands e.g. cmd('pwd')
 local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
-local g = vim.g      -- a table to access global variables
 local opt = vim.opt  -- to set options
-local o = vim.o -- to set global options
+local o = vim.opt_global -- to set global options
 local bo = vim.bo -- to set buffer-scoped options
 local wo = vim.wo -- to set window-scoped options
 
