@@ -15,7 +15,7 @@ return require("packer").startup(function(use)
       end
     },
     { "JoosepAlviste/nvim-ts-context-commentstring",
-      after = "nvim-ts-rainbow",
+      after = "rainbow-delimiters.nvim",
       requires = { "b3nj5m1n/kommentary" },
       config = [[require("config.comment")]],
     },
