@@ -50,5 +50,5 @@ o.joinspaces = false
 o.splitright = true
 o.splitbelow = true
 o.textwidth = 80
-o.colorcolumn = o.textwidth + 1
+wo.colorcolumn = "81"
 cmd "cabbr <expr> %% expand('%:p:h')"
