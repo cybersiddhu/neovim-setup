@@ -3,27 +3,31 @@ return require("packer").startup(function(use)
   use "wbthomason/packer.nvim" -- works
   -- treesitter
   use {
-    { "nvim-treesitter/nvim-treesitter", run = { ":TSUpdate" } },
+    { "nvim-treesitter/nvim-treesitter",             run = { ":TSUpdate" } },
     { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" },
-    { "nvim-treesitter/nvim-treesitter-refactor", after = "nvim-treesitter-textobjects" },
-    { "windwp/nvim-ts-autotag", after = "nvim-treesitter-refactor" },
-    { "p00f/nvim-ts-rainbow",
+    { "nvim-treesitter/nvim-treesitter-refactor",    after = "nvim-treesitter-textobjects" },
+    { "windwp/nvim-ts-autotag",                      after = "nvim-treesitter-refactor" },
+    {
+      "p00f/nvim-ts-rainbow",
       after = "nvim-ts-autotag",
       config = function()
         require("config.treesitter")
         require("config.folding")
       end
     },
-    { "JoosepAlviste/nvim-ts-context-commentstring",
+    {
+      "JoosepAlviste/nvim-ts-context-commentstring",
       after = "nvim-ts-rainbow",
       requires = { "b3nj5m1n/kommentary" },
       config = [[require("config.comment")]],
     },
-    { "nvim-treesitter/nvim-treesitter-context",
+    {
+      "nvim-treesitter/nvim-treesitter-context",
       after = "nvim-ts-context-commentstring",
       config = [[require("config.treesitter_context")]],
     }, -- works
-    { "folke/zen-mode.nvim",
+    {
+      "folke/zen-mode.nvim",
       after = "nvim-treesitter-context",
       requires = { "folke/twilight.nvim" },
       config = function()
@@ -31,12 +35,14 @@ return require("packer").startup(function(use)
         require("utils").map("n", "<Leader>zm", "<Cmd>ZenMode<CR>")
       end
     },
-    { "shaunsingh/nord.nvim",
+    {
+      "shaunsingh/nord.nvim",
       event = "VimEnter",
       commit = "78f5f001709b5b321a35dcdc44549ef93185e024",
       config = "vim.cmd[[colorscheme nord]]",
     },
-    { "stevearc/aerial.nvim",
+    {
+      "stevearc/aerial.nvim",
       config = [[require("config.aerial")]],
     },
   }
@@ -45,7 +51,8 @@ return require("packer").startup(function(use)
   use {
     { "b0o/schemastore.nvim" },
     { "hrsh7th/nvim-cmp" },
-    { "hrsh7th/cmp-nvim-lsp",
+    {
+      "hrsh7th/cmp-nvim-lsp",
       requires = {
         {
           "simrat39/inlay-hints.nvim",
@@ -63,7 +70,7 @@ return require("packer").startup(function(use)
       },
     },
     { "hrsh7th/cmp-buffer" }, -- works
-    { "f3fora/cmp-spell" }, -- works,
+    { "f3fora/cmp-spell" },   -- works,
     { "hrsh7th/cmp-calc" },
     { "hrsh7th/cmp-path" },
     { "hrsh7th/cmp-nvim-lsp-document-symbol" },
@@ -72,7 +79,8 @@ return require("packer").startup(function(use)
     { "octaltree/cmp-look" },
     { "ray-x/cmp-treesitter" },
     { "onsails/lspkind-nvim" }, -- works
-    { "L3MON4D3/LuaSnip",
+    {
+      "L3MON4D3/LuaSnip",
       requires = {
         { "saadparwaiz1/cmp_luasnip" },
         { "rafamadriz/friendly-snippets" },
@@ -85,9 +93,10 @@ return require("packer").startup(function(use)
   }
   -- telescope
   use {
-    { "nvim-telescope/telescope.nvim", requires = { "nvim-lua/plenary.nvim" } },
+    { "nvim-telescope/telescope.nvim",             requires = { "nvim-lua/plenary.nvim" } },
     { "nvim-telescope/telescope-file-browser.nvim" },
-    { "nvim-telescope/telescope-fzf-native.nvim",
+    {
+      "nvim-telescope/telescope-fzf-native.nvim",
       run = "make",
       config = [[require("config.telescope")]],
     },
@@ -100,7 +109,8 @@ return require("packer").startup(function(use)
   }
   -- git
   use {
-    { "lewis6991/gitsigns.nvim",
+    {
+      "lewis6991/gitsigns.nvim",
       config = function()
         require("gitsigns").setup({ current_line_blame = true })
         vim.cmd [[highlight default link GitSignsCurrentLineBlame LineNr]]
@@ -108,7 +118,8 @@ return require("packer").startup(function(use)
       end
     },
     { "rhysd/git-messenger.vim" },
-    { "pwntester/octo.nvim",
+    {
+      "pwntester/octo.nvim",
       config = [[require("config.octo")]],
     },
   }
@@ -184,6 +195,7 @@ return require("packer").startup(function(use)
   -- gpt
   use {
     "Bryley/neoai.nvim",
+    requires = "MunifTanjim/nui.nvim",
     config = function()
       require("neoai").setup()
     end
