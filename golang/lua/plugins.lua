@@ -183,11 +183,10 @@ return require("packer").startup(function(use)
   }
   -- gpt
   use {
-    "jackMort/ChatGPT.nvim",
-    requires = "MunifTanjim/nui.nvim",
+    "Bryley/neoai.nvim",
     config = function()
-      require("chatgpt").setup()
-    end,
+      require("neoai").setup()
+    end
   }
   use {
     "james1236/backseat.nvim",
