@@ -186,7 +186,12 @@ return require("packer").startup(function(use)
   use {
     "Bryley/neoai.nvim",
     config = function()
-      require("neoai").setup()
+      require("neoai").setup({
+        ui = {
+          width = 70,
+          ouput_popup_height = 75
+        }
+      })
     end
   }
   --text objects
