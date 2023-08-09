@@ -210,7 +210,7 @@ return require("packer").startup(function(use)
   -- markdown
   use({
     "iamcco/markdown-preview.nvim",
-    run = function() vim.fn["mkdp#util#install"]() end,
+    run = "cd app && yarn",
     config = function ()
       require("config.markdown")
     end
