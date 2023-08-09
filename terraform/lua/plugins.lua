@@ -205,13 +205,19 @@ return require("packer").startup(function(use)
       })
     end
   }
+  use({
+    "robitx/gp.nvim",
+    config = function()
+      require("gp").setup()
+    end,
+  })
   --text objects
   use { "wellle/targets.vim" }
   -- markdown
   use({
     "iamcco/markdown-preview.nvim",
     run = "cd app && yarn",
-    config = function ()
+    config = function()
       require("config.markdown")
     end
   })
