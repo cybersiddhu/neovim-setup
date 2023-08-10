@@ -19,6 +19,7 @@ opt.iskeyword:remove("-")
 opt.signcolumn = "yes"
 opt.cmdheight = 2
 opt.updatetime = 300
+opt.termguicolors = true
 if fn.has("persistent_undo") then
 	opt.undofile = true
 	opt.undolevels = 1000
@@ -53,3 +54,6 @@ o.splitbelow = true
 o.textwidth = 80
 o.colorcolumn = o.textwidth + 1
 cmd "cabbr <expr> %% expand('%:p:h')"
+
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
