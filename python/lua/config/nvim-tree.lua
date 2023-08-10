@@ -30,16 +30,26 @@ local function on_attach(bufnr)
 end
 
 require("nvim-tree").setup({
+  diagnostics = {
+    enable = true,
+    show_on_dirs = true
+  },
+  modified = {
+    enable = true
+  },
+  sync_root_with_cwd = true,
+  respect_buf_cwd = true,
   on_attach = on_attach,
   sort_by = "case_sensitive",
   view = {
     width = 30,
   },
   renderer = {
+    add_trailing = true,
     group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
+    hightlight_modified = "icon",
+    highlight_opened_file = "icon",
+    hightlight_git = true
   },
   live_filter = {
     prefix = "[FILTER]: ",
