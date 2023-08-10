@@ -37,7 +37,6 @@ return require("packer").startup(function(use)
     },
   }
   -- lsp and snipetts
-
   use {
     { "b0o/schemastore.nvim" },
     { "hrsh7th/nvim-cmp" },
@@ -56,7 +55,6 @@ return require("packer").startup(function(use)
     { "hrsh7th/cmp-path" },
     { "hrsh7th/cmp-nvim-lsp-document-symbol" },
     { "hrsh7th/cmp-cmdline" },
-    --		{"uga-rosa/cmp-dictionary"},
     { "octaltree/cmp-look" },
     { "ray-x/cmp-treesitter" },
     { "onsails/lspkind-nvim" }, -- works

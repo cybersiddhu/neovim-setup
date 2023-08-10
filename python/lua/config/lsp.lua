@@ -28,7 +28,7 @@ end
 local on_attach = function(_, bufnr)
   keymaps_on_attach(bufnr)
 end
-for _, lsp in ipairs({ "dockerls", "yamlls" }) do
+for _, lsp in ipairs({ "dockerls", "yamlls", "marksman", "pyright" }) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
     capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
