@@ -190,6 +190,12 @@ return require("packer").startup(function(use)
       })
     end
   }
+  use({
+    "robitx/gp.nvim",
+    config = function()
+      require("gp").setup()
+    end,
+  })
   use {
     "james1236/backseat.nvim",
     config = function()
