@@ -6,7 +6,6 @@ vim.keymap.set('n', ']c', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setqflist, opts)
 vim.keymap.set('n', '<space>l', vim.diagnostic.setloclist, opts)
 
-local ih = require("inlay-hints")
 local nvim_lsp = require "lspconfig"
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
 local buf_set_keymap = vim.keymap.set
@@ -39,7 +38,6 @@ end
 local on_attach_gopls = function(client, bufnr)
 	client.server_capabilities.documentFormattingProvider = false
 	keymaps_on_attach(bufnr)
-	ih.on_attach(client,bufnr)
 end
 nvim_lsp.gopls.setup{
 	on_attach = on_attach_gopls,
