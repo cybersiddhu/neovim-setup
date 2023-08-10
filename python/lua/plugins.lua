@@ -137,8 +137,10 @@ return require("packer").startup(function(use)
     end,
   }
   -- file explorer
-  use { "kyazdani42/nvim-tree.lua",
-    config = [[require("config.nvim-tree")]]
+  use { "nvim-tree/nvim-tree.lua",
+    config = function()
+      require("config.nvim-tree").setup()
+    end
   }
   -- documentation
   use { "danymat/neogen",
