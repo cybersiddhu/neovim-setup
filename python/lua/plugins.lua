@@ -83,7 +83,7 @@ return require("packer").startup(function(use)
   }
   -- tabline
   use { "romgrk/barbar.nvim",
-    requires = { "kyazdani42/nvim-web-devicons" },
+    requires = { "nvim-tree/nvim-web-devicons" },
     config = [[require("config.tabline")]],
   }
   -- git
@@ -139,7 +139,7 @@ return require("packer").startup(function(use)
   -- file explorer
   use { "nvim-tree/nvim-tree.lua",
     config = function()
-      require("config.nvim-tree").setup()
+      require("config.nvim-tree")
     end
   }
   -- documentation
