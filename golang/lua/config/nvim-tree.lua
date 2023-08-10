@@ -48,7 +48,7 @@ require("nvim-tree").setup({
     add_trailing = true,
     group_empty = true,
     highlight_modified = "icon",
-    highlight_opened_file = "icon",
+    highlight_opened_files = "icon",
     highlight_git = true
   },
   live_filter = {
