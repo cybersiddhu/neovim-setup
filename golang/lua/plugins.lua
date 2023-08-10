@@ -56,7 +56,6 @@ return require("packer").startup(function(use)
     { "hrsh7th/cmp-path" },
     { "hrsh7th/cmp-nvim-lsp-document-symbol" },
     { "hrsh7th/cmp-cmdline" },
-    --		{"uga-rosa/cmp-dictionary"},
     { "octaltree/cmp-look" },
     { "ray-x/cmp-treesitter" },
     { "onsails/lspkind-nvim" }, -- works
@@ -85,7 +84,7 @@ return require("packer").startup(function(use)
   }
   -- tabline
   use { "romgrk/barbar.nvim",
-    requires = { "kyazdani42/nvim-web-devicons" },
+    requires = { "nvim-tree/nvim-web-devicons" },
     config = [[require("config.tabline")]],
   }
   -- git
@@ -139,9 +138,15 @@ return require("packer").startup(function(use)
     end,
   }
   -- file explorer
-  use { "kyazdani42/nvim-tree.lua",
+  use { "nvim-tree/nvim-tree.lua",
     config = [[require("config.nvim-tree")]]
   }
+	use {
+		"antosha417/nvim-lsp-file-operations",
+		config = function()
+			require("lsp-file-operations").setup()
+		end
+	}
   -- extra plugin for formatting
   use { "jose-elias-alvarez/null-ls.nvim",
     config = function()
