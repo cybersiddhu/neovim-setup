@@ -45,15 +45,6 @@ return require("packer").startup(function(use)
       "hrsh7th/cmp-nvim-lsp",
       requires = {
         {
-          "simrat39/inlay-hints.nvim",
-          config = function()
-            require("inlay-hints").setup({
-              only_current_line = true,
-              eol = { right_align = true },
-            })
-          end,
-        },
-        {
           "neovim/nvim-lspconfig",
           config = [[require("config.lsp")]],
         }
