@@ -29,7 +29,6 @@ return require("packer").startup(function(use)
     {
       "shaunsingh/nord.nvim",
       event = "VimEnter",
-      commit = "78f5f001709b5b321a35dcdc44549ef93185e024",
       config = "vim.cmd[[colorscheme nord]]",
     },
     {
