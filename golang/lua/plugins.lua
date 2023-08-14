@@ -140,12 +140,12 @@ return require("packer").startup(function(use)
   use { "nvim-tree/nvim-tree.lua",
     config = [[require("config.nvim-tree")]]
   }
-	use {
-		"antosha417/nvim-lsp-file-operations",
-		config = function()
-			require("lsp-file-operations").setup()
-		end
-	}
+  use {
+    "antosha417/nvim-lsp-file-operations",
+    config = function()
+      require("lsp-file-operations").setup()
+    end
+  }
   -- extra plugin for formatting
   use { "jose-elias-alvarez/null-ls.nvim",
     config = function()
@@ -193,7 +193,7 @@ return require("packer").startup(function(use)
   use({
     "robitx/gp.nvim",
     config = function()
-      require("gp").setup()
+      require("config.gp")
     end,
   })
   use {
