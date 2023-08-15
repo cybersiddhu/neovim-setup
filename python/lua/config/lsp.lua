@@ -28,13 +28,42 @@ end
 local on_attach = function(_, bufnr)
   keymaps_on_attach(bufnr)
 end
-for _, lsp in ipairs({ "dockerls", "yamlls", "marksman", "pyright" }) do
+local rufflsp_on_attach = function(client, bufnr)
+  client.server_capabilities.hoverProvider = false
+  keymaps_on_attach(bufnr)
+end
+local function pyright_capabilities()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+  return capabilities
+end
+
+
+for _, lsp in ipairs({ "dockerls", "yamlls", "marksman" }) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
     capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
   }
 end
-
+nvim_lsp.pyright.setup {
+  on_attach = on_attach,
+  capabilities = pyright_capabilities(),
+  settings = {
+    python = {
+      analysis = {
+        useLibraryCodeForTypes = true,
+        diagnosticSeverityOverrides = {
+          reportUnusedVariable = "warning", -- or anything
+        },
+        typeCheckingMode = "basic",
+      },
+    },
+  },
+}
+nvim_lsp.ruff_lsp.setup {
+  on_attach = rufflsp_on_attach,
+  capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+}
 nvim_lsp.vimls.setup {
   on_attach = require("aerial").on_attach
 }
