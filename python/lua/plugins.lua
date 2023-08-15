@@ -148,10 +148,6 @@ return require("packer").startup(function(use)
 			require("lsp-file-operations").setup()
 		end
 	}
-	-- documentation
-	use { "danymat/neogen",
-		config = [[require("config.neogen")]]
-	}
 	-- semantic highlights
 	use { "m-demare/hlargs.nvim",
 		config = function()
