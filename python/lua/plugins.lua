@@ -114,7 +114,6 @@ return require("packer").startup(function(use)
 	-- statusline
 	use { "nvim-lualine/lualine.nvim",
 		event = "VimEnter",
-		commit = "016a20711ee595a11426f9c1f4ab3e04967df553",
 		config = [[require("config.lualine")]],
 	}
 	-- terminal
