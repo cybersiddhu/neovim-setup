@@ -50,7 +50,7 @@ return require("packer").startup(function(use)
       },
     },
     { "hrsh7th/cmp-buffer" }, -- works
-    { "f3fora/cmp-spell" }, -- works,
+    { "f3fora/cmp-spell" },   -- works,
     { "hrsh7th/cmp-calc" },
     { "hrsh7th/cmp-path" },
     { "hrsh7th/cmp-nvim-lsp-document-symbol" },
@@ -180,4 +180,10 @@ return require("packer").startup(function(use)
   })
   --text objects
   use { "wellle/targets.vim" }
+  --formatting
+  use { "nvimdev/guard.nvim",
+    config = function()
+      require("config.guard")
+    end
+  }
 end)
