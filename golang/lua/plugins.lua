@@ -152,10 +152,6 @@ return require("packer").startup(function(use)
       require("config.null-ls")
     end,
   }
-  -- documentation
-  use { "danymat/neogen",
-    config = [[require("config.neogen")]]
-  }
   -- test
   use { "nvim-neotest/neotest",
     requires = {
@@ -178,18 +174,6 @@ return require("packer").startup(function(use)
     end
   }
   -- gpt
-  use {
-    "Bryley/neoai.nvim",
-    requires = "MunifTanjim/nui.nvim",
-    config = function()
-      require("neoai").setup({
-        ui = {
-          width = 70,
-          ouput_popup_height = 75
-        }
-      })
-    end
-  }
   use({
     "robitx/gp.nvim",
     config = function()
