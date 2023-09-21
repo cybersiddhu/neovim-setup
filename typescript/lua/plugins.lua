@@ -17,7 +17,6 @@ return require("packer").startup(function(use)
     },
     {
       "JoosepAlviste/nvim-ts-context-commentstring",
-      after = "nvim-ts-rainbow",
       requires = { "b3nj5m1n/kommentary" },
       config = [[require("config.comment")]],
     },
