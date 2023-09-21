@@ -20,6 +20,7 @@ local swap_next, swap_prev = (function()
 
   return n, p
 end)()
+
 local tree_config = require "nvim-treesitter.configs"
 local text_objects = {
   select = {
@@ -85,18 +86,17 @@ local refactor = {
     },
   },
 }
-local rainbow = {
-  enable = true,
-  extended_mode = true,
-  max_file_lines = nil,
-}
 tree_config.setup {
+  ensure_installed = {
+    "dockerfile",
+    "json", "markdown", "toml",
+    "vim", "yaml", "javascript", "tsx", "typescript"
+  },
   highlight = { enable = true },
   incremental_selection = { enable = true },
   indent = { enable = true },
   textobjects = text_objects,
   refactor = refactor,
-  rainbow = rainbow,
   autotag = { enable = true },
   context_commentstring = {
     enable = true,
