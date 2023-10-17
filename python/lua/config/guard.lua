@@ -1,5 +1,5 @@
 local gft = require("guard.filetype")
-gft("python"):fmt({ cmd = "isort", stdin = true, args = { "--profile black", "-" } }):append("black")
+gft("python"):fmt("isort"):append("black")
 require('guard').setup({
   -- the only options for the setup function
   fmt_on_save = true,
