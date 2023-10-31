@@ -1,5 +1,13 @@
 local tele = require "telescope"
-tele.setup({})
+tele.setup({
+  pickers = {
+    find_files = {
+      find_command = {
+        "fd", "--unrestricted", "--glob", "--type", "f", "--exclude", ".git"
+      }
+    }
+  }
+})
 tele.load_extension("fzf")
 tele.load_extension("file_browser")
 tele.load_extension("aerial")
