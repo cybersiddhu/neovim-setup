@@ -8,8 +8,8 @@ function M.map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, options)
 end
 
-function M.godev_file_finder(dir)
-  local opts = { search_dirs = { dir }, hidden = true }
+function M.godev_file_finder()
+  local opts = { search_dirs = { os.getenv("XDG_DATA_HOME") }, hidden = true }
   local theme = require("telescope.themes").get_ivy()
   require("telescope.builtin").find_files(vim.tbl_extend("force", opts, theme))
 end
