@@ -9,7 +9,7 @@ function M.map(mode, lhs, rhs, opts)
 end
 
 function M.godev_file_finder()
-  local opts = { search_dirs = { os.getenv("XDG_DATA_HOME") }, hidden = true }
+  local opts = { cwd =  os.getenv("XDG_DATA_HOME") , hidden = true }
   local theme = require("telescope.themes").get_ivy()
   require("telescope.builtin").find_files(vim.tbl_extend("force", opts, theme))
 end
