@@ -92,6 +92,9 @@ tree_config.setup {
     "json", "markdown", "toml",
     "vim", "yaml", "terraform", "javascript", "tsx", "typescript"
   },
+  sync_install = false,
+  auto_install = false,
+  ignore_install = {},
   highlight = { enable = true },
   incremental_selection = { enable = true },
   indent = { enable = true },
