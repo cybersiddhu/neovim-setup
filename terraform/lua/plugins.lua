@@ -26,15 +26,6 @@ return require("packer").startup(function(use)
       config = [[require("config.treesitter_context")]],
     }, -- works
     {
-      "folke/zen-mode.nvim",
-      after = "nvim-treesitter-context",
-      requires = { "folke/twilight.nvim" },
-      config = function()
-        require("zen-mode").setup({})
-        require("utils").map("n", "<Leader>zm", "<Cmd>ZenMode<CR>")
-      end
-    },
-    {
       "shaunsingh/nord.nvim",
       event = "VimEnter",
       config = "vim.cmd[[colorscheme nord]]",
