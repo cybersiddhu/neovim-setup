@@ -184,17 +184,6 @@ return require("packer").startup(function(use)
       require("backseat").setup()
     end
   }
-  use {
-    "Bryley/neoai.nvim",
-    config = function()
-      require("neoai").setup({
-        ui = {
-          width = 70,
-          ouput_popup_height = 75
-        }
-      })
-    end
-  }
   use({
     "robitx/gp.nvim",
     config = function()
