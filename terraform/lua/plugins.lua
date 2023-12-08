@@ -138,7 +138,7 @@ return require("packer").startup(function(use)
     end,
   }
   -- file explorer
-  use { "kyazdani42/nvim-tree.lua",
+  use { "nvim-tree/nvim-tree.lua",
     config = function()
       require("config.nvim-tree")
     end,
