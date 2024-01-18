@@ -166,12 +166,6 @@ return require("packer").startup(function(use)
       require("hlargs").setup()
     end,
   }
-  -- vim ui interface
-  use { "stevearc/dressing.nvim",
-    config = function()
-      require("utils").map("n", "<Leader>sw", [[<Cmd>lua require("integration.stackoverflow").open_split()<CR>]])
-    end
-  }
   -- gpt
   use({
     "robitx/gp.nvim",
