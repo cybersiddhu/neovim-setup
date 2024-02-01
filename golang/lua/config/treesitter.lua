@@ -95,8 +95,4 @@ tree_config.setup {
   textobjects = text_objects,
   refactor = refactor,
   autotag = { enable = true },
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-  },
 }
