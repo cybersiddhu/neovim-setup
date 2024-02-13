@@ -85,22 +85,13 @@ local refactor = {
     },
   },
 }
-local rainbow = {
-  enable = true,
-  extended_mode = true,
-  max_file_lines = nil,
-}
+
 tree_config.setup {
-  ensure_installed = {"html","vim", "latex", "yaml"},
+  ensure_installed = { "html", "vim", "latex", "yaml" },
   highlight = { enable = true },
   incremental_selection = { enable = true },
   indent = { enable = true },
   textobjects = text_objects,
   refactor = refactor,
-  rainbow = rainbow,
   autotag = { enable = true },
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-  },
 }
