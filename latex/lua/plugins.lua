@@ -148,22 +148,7 @@ return require("packer").startup(function(use)
   use { "wellle/targets.vim" }
   use { "martineausimon/nvim-lilypond-suite",
     config = function()
-      require("nvls").setup({
-        lilypond = {
-          options = {
-            pdf_viewer = "skimpdf",
-          },
-        },
-        latex = {
-          options = {
-            pdf_viewer = "skimpdf",
-          },
-        },
-      })
-      vim.api.nvim_create_autocmd('BufEnter', {
-        command = "syntax sync fromstart",
-        pattern = { "*.ly", "*.ily", }
-      })
+      require("config.lilypond")
     end
   }
 end)
