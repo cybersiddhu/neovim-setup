@@ -146,10 +146,11 @@ return require("packer").startup(function(use)
     end
   }
   -- extra plugin for formatting
-  use { "jose-elias-alvarez/null-ls.nvim",
+  use { "nvimdev/guard.nvim",
+    requires = { "nvimdev/guard-collection" },
     config = function()
-      require("config.null-ls")
-    end,
+      require("config.guard")
+    end
   }
   -- test
   use { "nvim-neotest/neotest",
