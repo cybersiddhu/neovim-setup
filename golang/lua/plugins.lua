@@ -157,6 +157,7 @@ return require("packer").startup(function(use)
       "antoinemadec/FixCursorHold.nvim",
       "nvim-neotest/neotest-plenary",
       "nvim-neotest/neotest-go",
+      "nvim-neotest/nvim-nio",
     },
     config = [[require("config.neotest")]],
   }
