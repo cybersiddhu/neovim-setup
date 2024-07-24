@@ -90,7 +90,7 @@ tree_config.setup {
   ensure_installed = {
     "dockerfile",
     "json", "markdown", "toml",
-    "vim", "yaml", "terraform", "javascript", "tsx", "typescript"
+    "vim", "yaml", "terraform", "javascript", "tsx", "typescript", "just",
   },
   sync_install = false,
   auto_install = false,

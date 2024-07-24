@@ -200,4 +200,6 @@ return require("packer").startup(function(use)
       require("config.markdown")
     end
   })
+  -- justfile support
+  use { "NoahTheDuke/vim-just" }
 end)
