@@ -161,6 +161,7 @@ return require("packer").startup(function(use)
   -- test
   use { "nvim-neotest/neotest",
     requires = {
+      "nvim-neotest/nvim-nio",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-neotest/neotest-plenary",
       "haydenmeade/neotest-jest",
