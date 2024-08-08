@@ -183,4 +183,6 @@ return require("packer").startup(function(use)
   }
   --text objects
   use { "wellle/targets.vim" }
+  -- justfile support
+  use { "NoahTheDuke/vim-just" }
 end)
