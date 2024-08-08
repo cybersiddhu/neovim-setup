@@ -88,7 +88,7 @@ local refactor = {
 }
 tree_config.setup {
   ensure_installed = {
-    "go", "dockerfile", "gomod", "json", "markdown", "proto", "toml", "vim", "yaml", "graphql" },
+    "go", "dockerfile", "gomod", "json", "markdown", "proto", "toml", "vim", "yaml", "graphql", "just" },
   highlight = { enable = true },
   incremental_selection = { enable = true },
   indent = { enable = true },
