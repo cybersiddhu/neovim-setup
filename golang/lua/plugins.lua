@@ -147,6 +147,7 @@ return require("packer").startup(function(use)
   }
   -- extra plugin for formatting
   use { "nvimdev/guard.nvim",
+    commit = "b066152fe06122b047a6b3ce427a19d8b6e628ce",
     requires = { "nvimdev/guard-collection" },
     config = function()
       require("config.guard")
