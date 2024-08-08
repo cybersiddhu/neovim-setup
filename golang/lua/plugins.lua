@@ -175,12 +175,6 @@ return require("packer").startup(function(use)
       require("config.gp")
     end,
   })
-  use {
-    "james1236/backseat.nvim",
-    config = function()
-      require("backseat").setup()
-    end
-  }
   --text objects
   use { "wellle/targets.vim" }
   -- justfile support
