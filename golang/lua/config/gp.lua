@@ -1,4 +1,11 @@
 require("gp").setup({
+  providers = {
+    openrouter = {
+      disable = false,
+      endpoint = "https://openrouter.ai/api/v1/chat/completions",
+      secret = os.getenv("OPENROUTER_API_KEY"),
+    },
+  },
   agents = {
     -- Disable ChatGPT 3.5
     {
@@ -53,6 +60,18 @@ require("gp").setup({
           .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
           .. "START AND END YOUR ANSWER WITH:\n\n```",
     },
+    {
+      provider = "openrouter",
+      name = "CodeClaude35-sonnet",
+      chat = true,
+      command = true,
+      -- string with model name or table with model name and parameters
+      model = { model = "anthropic/claude-3.5-sonnet", temperature = 0.1, top_p = 1 },
+      -- system prompt (use this to specify the persona/role of the AI)
+      system_prompt = "You are an AI working as a code editor.\n\n"
+          .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+          .. "START AND END YOUR ANSWER WITH:\n\n```",
+    }
   },
 })
 require("utils").map("n", "<C-g>e", "<Cmd>GpEnew<CR>", { desc = "GPT Prompt Enew" })
