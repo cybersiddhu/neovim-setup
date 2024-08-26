@@ -8,7 +8,7 @@ return require("packer").startup(function(use)
     { "nvim-treesitter/nvim-treesitter-refactor",    after = "nvim-treesitter-textobjects" },
     { "windwp/nvim-ts-autotag",                      after = "nvim-treesitter-refactor" },
     {
-      "p00f/nvim-ts-rainbow",
+      "hiphish/rainbow-delimiters.nvim",
       after = "nvim-ts-autotag",
       config = function()
         require("config.treesitter")
@@ -17,8 +17,7 @@ return require("packer").startup(function(use)
     },
     {
       "JoosepAlviste/nvim-ts-context-commentstring",
-      after = "nvim-ts-rainbow",
-      requires = { "b3nj5m1n/kommentary" },
+      requires = { "numToStr/Comment.nvim" },
       config = [[require("config.comment")]],
     },
     {
@@ -154,24 +153,6 @@ return require("packer").startup(function(use)
     end,
   }
   -- gpt
-  use {
-    "Bryley/neoai.nvim",
-    requires = "MunifTanjim/nui.nvim",
-    config = function()
-      require("neoai").setup({
-        ui = {
-          width = 70,
-          ouput_popup_height = 75
-        }
-      })
-    end
-  }
-  use {
-    "james1236/backseat.nvim",
-    config = function()
-      require("backseat").setup()
-    end
-  }
   use({
     "robitx/gp.nvim",
     config = function()
