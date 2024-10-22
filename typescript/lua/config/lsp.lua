@@ -44,7 +44,7 @@ for _, lsp in ipairs({ "html", "graphql", "eslint", "dockerls", "yamlls" }) do
   }
 end
 -- typescript server setup
-nvim_lsp.tsserver.setup {
+nvim_lsp.ts_ls.setup {
   on_attach = on_attach_tsserver,
   capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
 }
