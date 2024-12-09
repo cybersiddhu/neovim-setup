@@ -9,6 +9,7 @@ return require("packer").startup(function(use)
     { "windwp/nvim-ts-autotag",                      after = "nvim-treesitter-refactor" },
     {
       "hiphish/rainbow-delimiters.nvim",
+      tag = "v0.7.0",
       after = "nvim-ts-autotag",
       config = function()
         require("config.treesitter")

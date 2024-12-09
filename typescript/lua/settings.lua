@@ -50,4 +50,6 @@ bo.softtabstop = 4
 o.joinspaces = false
 o.splitright = true
 o.splitbelow = true
+o.textwidth = 80
+opt.colorcolumn = "81"
 cmd "cabbr <expr> %% expand('%:p:h')"
