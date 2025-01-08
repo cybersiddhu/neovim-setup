@@ -57,7 +57,7 @@ nvim_lsp.pyright.setup {
     },
   },
 }
-nvim_lsp.ruff_lsp.setup {
+nvim_lsp.ruff.setup {
   on_attach = rufflsp_on_attach,
   capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
 }
