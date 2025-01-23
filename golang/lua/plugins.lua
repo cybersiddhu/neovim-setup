@@ -170,11 +170,10 @@ return require("packer").startup(function(use)
       require("hlargs").setup()
     end,
   }
-  -- gpt
-  use({
-    "robitx/gp.nvim",
+  -- ai
+  use({ "olimorris/codecompanion.nvim",
     config = function()
-      require("config.gp")
+      require("config.codecompanion")
     end,
   })
   --text objects
