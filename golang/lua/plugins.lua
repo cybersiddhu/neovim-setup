@@ -65,6 +65,7 @@ return require("packer").startup(function(use)
         { "saadparwaiz1/cmp_luasnip" },
         { "rafamadriz/friendly-snippets" },
       },
+      run = "make install_jsregexp",
       config = function()
         require("config.autocomplete")
         require("luasnip.loaders.from_vscode").load()
