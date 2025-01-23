@@ -171,6 +171,15 @@ return require("packer").startup(function(use)
       require("hlargs").setup()
     end,
   }
+  -- markdown
+  use({
+    'MeanderingProgrammer/render-markdown.nvim',
+    config = function()
+        require('render-markdown').setup({
+          file_types = { "markdown", "codecompanion" }
+        })
+    end,
+})
   -- ai
   use({ "olimorris/codecompanion.nvim",
     config = function()
