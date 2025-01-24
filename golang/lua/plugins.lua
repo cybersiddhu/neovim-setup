@@ -173,12 +173,14 @@ return require("packer").startup(function(use)
   }
   -- markdown
   use({
-    'MeanderingProgrammer/render-markdown.nvim',
+    "MeanderingProgrammer/render-markdown.nvim",
     config = function()
         require('render-markdown').setup({
+          enabled = true,
           file_types = { "markdown", "Avante" }
         })
     end,
+    ft = { "markdown", "Avante" }
 })
   -- ai
   use({ "yetone/avante.nvim",
