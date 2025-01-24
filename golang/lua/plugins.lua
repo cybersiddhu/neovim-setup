@@ -176,14 +176,19 @@ return require("packer").startup(function(use)
     'MeanderingProgrammer/render-markdown.nvim',
     config = function()
         require('render-markdown').setup({
-          file_types = { "markdown", "codecompanion" }
+          file_types = { "markdown", "Avante" }
         })
     end,
 })
   -- ai
-  use({ "olimorris/codecompanion.nvim",
+  use({ "yetone/avante.nvim",
+    run = { "make" },
+    requires = {
+      "stevearc/dressing.nvim",
+      "MunifTanjim/nui.nvim"
+    },
     config = function()
-      require("config.codecompanion")
+      require("config.avante")
     end,
   })
   --text objects
