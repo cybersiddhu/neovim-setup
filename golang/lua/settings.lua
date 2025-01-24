@@ -53,3 +53,5 @@ o.splitbelow = true
 o.textwidth = 80
 opt.colorcolumn = "81"
 cmd "cabbr <expr> %% expand('%:p:h')"
+-- views can only be fully collapsed with the global statusline
+opt.laststatus = 3

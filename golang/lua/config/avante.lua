@@ -5,8 +5,11 @@ require("avante").setup({
   openrouter = {
     __inherited_from = "openai",
     api_key_name = "OPENROUTER_API_KEY",
-    endpoint = "https://openrouter.ai/api",
-    model = "deepseek/deepseek-r1",
+    endpoint = "https://openrouter.ai/api/v1",
+    model = "anthropic/claude-3.5-sonnet",
   },
+ },
+ windows = {
+   width = 40
  }
 })
