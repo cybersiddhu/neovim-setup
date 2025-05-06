@@ -28,12 +28,20 @@ end
 local on_attach = function(_, bufnr)
   keymaps_on_attach(bufnr)
 end
-for _, lsp in ipairs({ "golangci_lint_ls", "dockerls", "yamlls", "graphql", "marksman" }) do
+for _, lsp in ipairs({ "dockerls", "yamlls", "graphql", "marksman" }) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
     capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
   }
 end
+
+nvim_lsp.golangci_lint_ls.setup {
+  on_attach = on_attach,
+  capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  init_options = {
+		command = { "golangci-lint", "run", "--out-format", "json", "--issues-exit-code=1" }
+	}
+}
 
 local on_attach_gopls = function(client, bufnr)
   client.server_capabilities.documentFormattingProvider = false
@@ -44,6 +52,24 @@ nvim_lsp.gopls.setup {
   capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
   settings = {
     gopls = {
+      gofumpt = true,
+      usePlaceholders = true,
+      analyses = {
+        unusedparams = true,
+        unreachable = true,
+        unusedvariable = true,
+        shadow = true,
+        ST1022 = true,
+        ST1023 = true,
+        ST1018 = true,
+        S1006 = true,
+        SA5010 = true,
+        SA6000 = true,
+        ST1012 = true,
+        ST1016 = true,
+        QF1007 = true,
+        QF1006 = true
+      },
       codelenses = {
         gc_details = true,
         tidy = true,
