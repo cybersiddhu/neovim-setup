@@ -94,5 +94,4 @@ tree_config.setup {
   indent = { enable = true },
   textobjects = text_objects,
   refactor = refactor,
-  autotag = { enable = true },
 }
