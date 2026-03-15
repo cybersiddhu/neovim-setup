@@ -5,8 +5,12 @@ local buf_set_keymap = vim.keymap.set
 local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[c', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']c', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '[c', function()
+  vim.diagnostic.jump({ count = -1 })
+end, opts)
+vim.keymap.set('n', ']c', function()
+  vim.diagnostic.jump({ count = 1 })
+end, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setqflist, opts)
 vim.keymap.set('n', '<space>l', vim.diagnostic.setloclist, opts)
 
@@ -19,7 +23,7 @@ local function keymaps_on_attach(bufnr)
   buf_set_keymap("n", "pi", vim.lsp.buf.implementation, bufopts)
   buf_set_keymap("n", "pr", vim.lsp.buf.references, bufopts)
   buf_set_keymap("n", "<Leader>pn", vim.lsp.buf.rename, bufopts)
-	buf_set_keymap("n", "<Leader>f", function() vim.lsp.buf.format { async = true } end, bufopts)
+  buf_set_keymap("n", "<Leader>f", function() vim.lsp.buf.format { async = true } end, bufopts)
   buf_set_keymap("x", "<Leader>f", vim.lsp.formatexpr, bufopts)
   buf_set_keymap("v", "<Leader>f", vim.lsp.formatexpr, bufopts)
   buf_set_keymap("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
@@ -42,27 +46,30 @@ vim.lsp.config("lua_ls", {
   on_init = function(client)
     if client.workspace_folders then
       local path = client.workspace_folders[1].name
-      if path ~= vim.fn.stdpath("config")
-        and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc")) then
+      local has_local_luarc = vim.fn.filereadable(path .. "/.luarc.json") == 1
+        or vim.fn.filereadable(path .. "/.luarc.jsonc") == 1
+      if path ~= vim.fn.stdpath("config") and has_local_luarc then
         return
       end
     end
 
-    client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-      runtime = {
-        version = "LuaJIT",
-        path = {
-          "lua/?.lua",
-          "lua/?/init.lua",
+    client.config.settings.Lua = vim.tbl_deep_extend(
+      "force",
+      client.config.settings.Lua, {
+        runtime = {
+          version = "LuaJIT",
+          path = {
+            "lua/?.lua",
+            "lua/?/init.lua",
+          },
         },
-      },
-      workspace = {
-        checkThirdParty = false,
-        library = {
-          vim.env.VIMRUNTIME,
+        workspace = {
+          checkThirdParty = false,
+          library = {
+            vim.env.VIMRUNTIME,
+          },
         },
-      },
-    })
+      })
   end,
   settings = {
     Lua = {
