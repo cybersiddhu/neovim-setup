@@ -6,8 +6,12 @@ local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_cli
 local go_format_group = vim.api.nvim_create_augroup("go-lsp-format", { clear = true })
 
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[c', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']c', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '[c', function()
+  vim.diagnostic.jump({ count = -1 })
+end, opts)
+vim.keymap.set('n', ']c', function()
+  vim.diagnostic.jump({ count = 1 })
+end, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setqflist, opts)
 vim.keymap.set('n', '<space>l', vim.diagnostic.setloclist, opts)
 

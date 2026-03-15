@@ -2,7 +2,7 @@ require "settings"
 require "keymappings"
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
+if vim.fn.isdirectory(lazypath) == 0 then
   vim.fn.system({
     "git",
     "clone",
