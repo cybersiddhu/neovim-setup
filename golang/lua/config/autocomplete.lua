@@ -81,6 +81,7 @@ cmp.setup {
   },
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
+    { name = "go_deep", keyword_length = 3, max_item_count = 5 },
     { name = "luasnip" },
     { name = "buffer",    option = { get_bufnrs = bufopt } },
     { name = "treesitter" },
@@ -102,6 +103,7 @@ cmp.setup {
       with_text = true,
       menu = {
         nvim_lsp = "[LSP]",
+        go_deep = "[GoDeep]",
         luasnip = "[Snippet]",
         buffer = "[Buffer]",
         treesitter = "[Treesitter]",

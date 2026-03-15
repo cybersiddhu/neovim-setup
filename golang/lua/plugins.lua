@@ -70,6 +70,10 @@ return {
       "ray-x/cmp-treesitter",
       "onsails/lspkind-nvim",
       {
+        "samiulsami/cmp-go-deep",
+        dependencies = { "kkharji/sqlite.lua" },
+      },
+      {
         "L3MON4D3/LuaSnip",
         build = "make install_jsregexp",
         dependencies = {
