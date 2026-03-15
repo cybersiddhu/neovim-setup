@@ -1,9 +1,8 @@
 -- lsp and related configuration
 local opts = { noremap = true, silent = true }
-local ih = require("inlay-hints")
-local nvim_lsp = require "lspconfig"
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
 local buf_set_keymap = vim.keymap.set
+local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[c', vim.diagnostic.goto_prev, opts)
@@ -32,55 +31,79 @@ local on_attach = function(_, bufnr)
   keymaps_on_attach(bufnr)
 end
 
-nvim_lsp.yamlls.setup {
+vim.lsp.config("yamlls", {
   on_attach = on_attach,
-  capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
-}
+  capabilities = capabilities,
+})
 
-nvim_lsp.lua_ls.setup {
+vim.lsp.config("lua_ls", {
   on_attach = on_attach,
-  capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
-  settings = {
-    Lua = {
+  capabilities = capabilities,
+  on_init = function(client)
+    if client.workspace_folders then
+      local path = client.workspace_folders[1].name
+      if path ~= vim.fn.stdpath("config")
+        and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc")) then
+        return
+      end
+    end
+
+    client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
       runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = { 'vim' },
+        version = "LuaJIT",
+        path = {
+          "lua/?.lua",
+          "lua/?/init.lua",
+        },
       },
       workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false,
+        library = {
+          vim.env.VIMRUNTIME,
+        },
       },
-      -- Do not send telemetry data containing a randomized but unique identifier
+    })
+  end,
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim" },
+      },
+      codeLens = {
+        enable = true,
+      },
       telemetry = {
         enable = false,
       },
       completion = {
         callSnippet = "Both",
-        keyWordSnippet = "Both",
+        keywordSnippet = "Both",
       },
       hint = {
         enable = true,
+        semicolon = "Disable",
         setType = true,
-      }
+      },
     },
   },
-}
+})
 
-nvim_lsp.vimls.setup {
+vim.lsp.config("vimls", {
   on_attach = require("aerial").on_attach
-}
+})
 
-nvim_lsp.jsonls.setup {
+vim.lsp.config("jsonls", {
   on_attach = on_attach,
-  capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  capabilities = capabilities,
   settings = {
     json = {
       schemas = require("schemastore").json.schemas(),
       validate = { enable = true },
     },
   },
-}
+})
+
+vim.lsp.enable("yamlls")
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("vimls")
+vim.lsp.enable("jsonls")

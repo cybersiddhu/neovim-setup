@@ -5,4 +5,4 @@ require("treesitter-context").setup {
 		default = { "class", "function", "method" },
 	},
 }
-require("utils").map("n", "<Leader>xt", "<Cmd>TSContextToggle<CR>")
+require("utils").map("n", "<Leader>xt", "<Cmd>TSContext toggle<CR>")

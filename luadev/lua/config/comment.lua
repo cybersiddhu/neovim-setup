@@ -1,4 +1,8 @@
 -- integration with kommentary plugin
+require("ts_context_commentstring").setup({
+	enable_autocmd = false,
+})
+
 require("kommentary.config").configure_language("lua", {
 	single_line_comment_string = "auto",
 	multi_line_comment_strings = "auto",

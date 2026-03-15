@@ -3,16 +3,29 @@ return {
   -- treesitter
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",
+    lazy = false,
     build = ":TSUpdate",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      "nvim-treesitter/nvim-treesitter-refactor",
-      "windwp/nvim-ts-autotag",
-      "p00f/nvim-ts-rainbow",
+      { "nvim-treesitter/nvim-treesitter-textobjects", branch = "master" },
+      { "nvim-treesitter/nvim-treesitter-refactor", branch = "master" },
+      {
+        "windwp/nvim-ts-autotag",
+        config = function()
+          require("nvim-ts-autotag").setup()
+        end,
+      },
     },
     config = function()
       require("config.treesitter")
       require("config.folding")
+    end,
+  },
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("config.rainbow_delimiters")
     end,
   },
   {
@@ -24,6 +37,7 @@ return {
   },
   {
     "lewis6991/nvim-treesitter-context",
+    branch = "master",
     config = function()
       require("config.treesitter_context")
     end,
@@ -72,7 +86,7 @@ return {
           "rafamadriz/friendly-snippets",
         },
         config = function()
-          require("luasnip.loaders.from_vscode").load()
+          require("luasnip.loaders.from_vscode").lazy_load()
         end,
       },
     },
@@ -232,14 +246,6 @@ return {
   -- text objects
   { "wellle/targets.vim" },
 
-  -- gpt
-  {
-    "jackMort/ChatGPT.nvim",
-    dependencies = { "MunifTanjim/nui.nvim" },
-    config = function()
-      require("chatgpt").setup()
-    end,
-  },
   {
     "james1236/backseat.nvim",
     config = function()
