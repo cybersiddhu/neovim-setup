@@ -1,193 +1,249 @@
--- plugin installation using packer
-return require("packer").startup(function(use)
-  use "wbthomason/packer.nvim" -- works
+-- plugin installation using lazy.nvim
+return {
   -- treesitter
-  use {
-    { "nvim-treesitter/nvim-treesitter", run = { ":TSUpdate" } },
-    { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" },
-    { "nvim-treesitter/nvim-treesitter-refactor", after = "nvim-treesitter-textobjects" },
-    { "windwp/nvim-ts-autotag", after = "nvim-treesitter-refactor" },
-    { "p00f/nvim-ts-rainbow",
-      after = "nvim-ts-autotag",
-      config = function()
-        require("config.treesitter")
-        require("config.folding")
-      end
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      "nvim-treesitter/nvim-treesitter-refactor",
+      "windwp/nvim-ts-autotag",
+      "p00f/nvim-ts-rainbow",
     },
-    { "JoosepAlviste/nvim-ts-context-commentstring",
-      after = "nvim-ts-rainbow",
-      requires = { "b3nj5m1n/kommentary" },
-      config = [[require("config.comment")]],
-    },
-    { "lewis6991/nvim-treesitter-context",
-      after = "nvim-ts-context-commentstring",
-      config = [[require("config.treesitter_context")]],
-    }, -- works
-    { "folke/zen-mode.nvim",
-      after = "nvim-treesitter-context",
-      requires = { "folke/twilight.nvim" },
-      config = function()
-        require("zen-mode").setup({})
-        require("utils").map("n", "<Leader>zm", "<Cmd>ZenMode<CR>")
-      end
-    },
-    { "shaunsingh/nord.nvim",
-      event = "VimEnter",
-      config = "vim.cmd[[colorscheme nord]]",
-    },
-    { "stevearc/aerial.nvim",
-      config = [[require("config.aerial")]],
-    },
-  }
-  -- lsp and snipetts
+    config = function()
+      require("config.treesitter")
+      require("config.folding")
+    end,
+  },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    dependencies = { "b3nj5m1n/kommentary" },
+    config = function()
+      require("config.comment")
+    end,
+  },
+  {
+    "lewis6991/nvim-treesitter-context",
+    config = function()
+      require("config.treesitter_context")
+    end,
+  },
+  {
+    "folke/zen-mode.nvim",
+    dependencies = { "folke/twilight.nvim" },
+    config = function()
+      require("zen-mode").setup({})
+      require("utils").map("n", "<Leader>zm", "<Cmd>ZenMode<CR>")
+    end,
+  },
+  {
+    "shaunsingh/nord.nvim",
+    event = "VimEnter",
+    config = function()
+      vim.cmd([[colorscheme nord]])
+    end,
+  },
+  {
+    "stevearc/aerial.nvim",
+    config = function()
+      require("config.aerial")
+    end,
+  },
 
-  use {
-    { "b0o/schemastore.nvim" },
-    { "hrsh7th/nvim-cmp" },
-    { "hrsh7th/cmp-nvim-lsp",
-      requires = {
-        {
-          "simrat39/inlay-hints.nvim",
-          config = function()
-            require("inlay-hints").setup({
-              only_current_line = true,
-              eol = { right_align = true },
-            })
-          end,
+  -- lsp and snippets
+  { "b0o/schemastore.nvim" },
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "f3fora/cmp-spell",
+      "hrsh7th/cmp-calc",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-nvim-lsp-document-symbol",
+      "hrsh7th/cmp-cmdline",
+      "octaltree/cmp-look",
+      "ray-x/cmp-treesitter",
+      "onsails/lspkind-nvim",
+      {
+        "L3MON4D3/LuaSnip",
+        dependencies = {
+          "saadparwaiz1/cmp_luasnip",
+          "rafamadriz/friendly-snippets",
         },
-        {
-          "neovim/nvim-lspconfig",
-          config = [[require("config.lsp")]],
-        }
+        config = function()
+          require("luasnip.loaders.from_vscode").load()
+        end,
       },
     },
-    { "hrsh7th/cmp-buffer" }, -- works
-    { "f3fora/cmp-spell" }, -- works,
-    { "hrsh7th/cmp-calc" },
-    { "hrsh7th/cmp-path" },
-    { "hrsh7th/cmp-nvim-lsp-document-symbol" },
-    { "hrsh7th/cmp-cmdline" },
-    --		{"uga-rosa/cmp-dictionary"},
-    { "octaltree/cmp-look" },
-    { "ray-x/cmp-treesitter" },
-    { "onsails/lspkind-nvim" }, -- works
-    { "L3MON4D3/LuaSnip",
-      requires = {
-        { "saadparwaiz1/cmp_luasnip" },
-        { "rafamadriz/friendly-snippets" },
-      },
-      config = function()
-        require("config.autocomplete")
-        require("luasnip.loaders.from_vscode").load()
-      end,
-    }, -- works
-  }
+    config = function()
+      require("config.autocomplete")
+    end,
+  },
+  {
+    "simrat39/inlay-hints.nvim",
+    config = function()
+      require("inlay-hints").setup({
+        only_current_line = true,
+        eol = { right_align = true },
+      })
+    end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      require("config.lsp")
+    end,
+  },
+
   -- telescope
-  use {
-    { "nvim-telescope/telescope.nvim", tag = "0.1.1", requires = { "nvim-lua/plenary.nvim" } },
-    { "nvim-telescope/telescope-file-browser.nvim" },
-    { "nvim-telescope/telescope-fzf-native.nvim",
-      run = "make",
-      config = [[require("config.telescope")]],
+  {
+    "nvim-telescope/telescope.nvim",
+    tag = "0.1.1",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-file-browser.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      "nvim-telescope/telescope-symbols.nvim",
     },
-    { "nvim-telescope/telescope-symbols.nvim" },
-  }
+    config = function()
+      require("config.telescope")
+    end,
+  },
+
   -- tabline
-  use { "romgrk/barbar.nvim",
-    requires = { "nvim-tree/nvim-web-devicons" },
-    config = [[require("config.tabline")]],
-  }
+  {
+    "romgrk/barbar.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("config.tabline")
+    end,
+  },
+
   -- git
-  use {
-    { "lewis6991/gitsigns.nvim",
-      config = function()
-        require("gitsigns").setup({ current_line_blame = true })
-        vim.cmd [[highlight default link GitSignsCurrentLineBlame LineNr]]
-        require("utils").map("n", "<Leader>cb", "<Cmd>Gitsigns toggle_current_line_blame<CR>")
-      end
-    },
-    { "rhysd/git-messenger.vim" },
-    { "pwntester/octo.nvim",
-      config = [[require("config.octo")]],
-    },
-  }
+  {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require("gitsigns").setup({ current_line_blame = true })
+      vim.cmd([[highlight default link GitSignsCurrentLineBlame LineNr]])
+      require("utils").map("n", "<Leader>cb", "<Cmd>Gitsigns toggle_current_line_blame<CR>")
+    end,
+  },
+  { "rhysd/git-messenger.vim" },
+  {
+    "pwntester/octo.nvim",
+    config = function()
+      require("config.octo")
+    end,
+  },
+
   -- hop
-  use { "phaazon/hop.nvim", config = [[require("config.hop")]] }
+  {
+    "phaazon/hop.nvim",
+    config = function()
+      require("config.hop")
+    end,
+  },
+
   -- notify
-  use { "rcarriga/nvim-notify",
+  {
+    "rcarriga/nvim-notify",
     event = "VimEnter",
     config = function()
       vim.notify = require("notify")
     end,
-  }
+  },
+
   -- statusline
-  use { "nvim-lualine/lualine.nvim",
+  {
+    "nvim-lualine/lualine.nvim",
     event = "VimEnter",
     commit = "016a20711ee595a11426f9c1f4ab3e04967df553",
-    config = [[require("config.lualine")]],
-  }
-  use { "editorconfig/editorconfig-vim" }
-  -- autopair
-  use { "windwp/nvim-autopairs",
     config = function()
-      require('nvim-autopairs').setup({})
-    end
-  }
+      require("config.lualine")
+    end,
+  },
+
+  { "editorconfig/editorconfig-vim" },
+
+  -- autopair
+  {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup({})
+    end,
+  },
+
   -- startup screen
-  use { "goolord/alpha-nvim",
+  {
+    "goolord/alpha-nvim",
     config = function()
       require("config.alpha").setup()
     end,
-  }
+  },
+
   -- file explorer
-  use { "kyazdani42/nvim-tree.lua",
-    config = [[require("config.nvim-tree")]]
-  }
+  {
+    "kyazdani42/nvim-tree.lua",
+    config = function()
+      require("config.nvim-tree")
+    end,
+  },
+
   -- documentation
-  use { "danymat/neogen",
-    config = [[require("config.neogen")]]
-  }
+  {
+    "danymat/neogen",
+    config = function()
+      require("config.neogen")
+    end,
+  },
+
   -- semantic highlights
-  use { "m-demare/hlargs.nvim",
+  {
+    "m-demare/hlargs.nvim",
     config = function()
       require("hlargs").setup()
     end,
-  }
+  },
+
   -- my custom plugin
-  use { "cybersiddhu/lua-plugins.nvim",
-    requires = {
-      -- terminal
-      { "voldikss/vim-floaterm",
+  {
+    "cybersiddhu/lua-plugins.nvim",
+    dependencies = {
+      {
+        "voldikss/vim-floaterm",
         event = "VimEnter",
         config = function()
           require("config.floaterm")
-        end
+        end,
       },
-      -- vim ui interface
-      { "stevearc/dressing.nvim",
+      {
+        "stevearc/dressing.nvim",
         config = function()
           require("dressing").setup({ input = { width = 60, prefer_width = 70 } })
-        end
-      }
+        end,
+      },
     },
     config = function()
       require("coding-assistant").setup()
-    end
-  }
-  --text objects
-  use { "wellle/targets.vim" }
+    end,
+  },
+
+  -- text objects
+  { "wellle/targets.vim" },
+
   -- gpt
-  use {
+  {
     "jackMort/ChatGPT.nvim",
-    requires = "MunifTanjim/nui.nvim",
+    dependencies = { "MunifTanjim/nui.nvim" },
     config = function()
       require("chatgpt").setup()
     end,
-  }
-  use {
+  },
+  {
     "james1236/backseat.nvim",
     config = function()
       require("backseat").setup()
-    end
-  }
-end)
+    end,
+  },
+}
