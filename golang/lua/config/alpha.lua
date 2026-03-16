@@ -49,6 +49,8 @@ function M.setup()
     dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
     dashboard.button("b", "  New buffer", ":tabnew <CR>"),
     dashboard.button("r", "  Recently used files", ":Telescope oldfiles theme=ivy<CR>"),
+    dashboard.button("s", "  Restore session", "<Cmd>lua require('persistence').load()<CR>"),
+    dashboard.button("S", "󰙅  Select session", "<Cmd>lua require('persistence').select()<CR>"),
     dashboard.button("t", "  Find text", ":Telescope live_grep theme=ivy<CR>"),
     dashboard.button("c", "  Configuration", ":e $MYVIMRC<CR>"),
     dashboard.button("u", "  Update plugins", ":Lazy sync<CR>"),
