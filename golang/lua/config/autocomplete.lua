@@ -89,8 +89,6 @@ cmp.setup {
     { name = "path" },
     { name = "calc" },
     { name = "spell" },
-    { name = "emoji" },
-    { name = "render-markdown"}
     --		{name = "dictionary"},
   }),
   snippet = {
