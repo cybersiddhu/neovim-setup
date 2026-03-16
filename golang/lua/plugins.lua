@@ -223,6 +223,5 @@ return {
       })
     end,
   },
-  { "wellle/targets.vim" },
   { "NoahTheDuke/vim-just" },
 }
