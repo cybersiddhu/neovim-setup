@@ -139,9 +139,10 @@ return {
   },
 
   {
-    "phaazon/hop.nvim",
+    "folke/flash.nvim",
+    event = "VeryLazy",
     config = function()
-      require("config.hop")
+      require("config.flash")
     end,
   },
   {
