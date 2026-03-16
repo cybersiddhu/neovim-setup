@@ -149,7 +149,23 @@ return {
     "rcarriga/nvim-notify",
     event = "VimEnter",
     config = function()
-      vim.notify = require("notify")
+      local notify = require("notify")
+      notify.setup({
+        timeout = 1000,
+      })
+      vim.notify = function(message, level, opts)
+        local notify_opts = opts or {}
+        if notify_opts.timeout == nil then
+          if level == vim.log.levels.ERROR then
+            notify_opts.timeout = 3500
+          elseif level == vim.log.levels.WARN then
+            notify_opts.timeout = 2200
+          else
+            notify_opts.timeout = 900
+          end
+        end
+        return notify(message, level, notify_opts)
+      end
     end,
   },
   {
