@@ -70,6 +70,21 @@ return {
       "ray-x/cmp-treesitter",
       "onsails/lspkind-nvim",
       {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+          require("config.copilot")
+        end,
+      },
+      {
+        "zbirenbaum/copilot-cmp",
+        dependencies = { "zbirenbaum/copilot.lua" },
+        config = function()
+          require("copilot_cmp").setup()
+        end,
+      },
+      {
         "samiulsami/cmp-go-deep",
         dependencies = { "kkharji/sqlite.lua" },
       },
@@ -93,6 +108,26 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       require("config.lsp")
+    end,
+  },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    cmd = {
+      "CopilotChat",
+      "CopilotChatOpen",
+      "CopilotChatClose",
+      "CopilotChatToggle",
+      "CopilotChatReset",
+      "CopilotChatStop",
+      "CopilotChatModels",
+      "CopilotChatPrompts",
+    },
+    dependencies = {
+      { "nvim-lua/plenary.nvim", branch = "master" },
+      { "zbirenbaum/copilot.lua" },
+    },
+    config = function()
+      require("config.copilot_chat")
     end,
   },
 

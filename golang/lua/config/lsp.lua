@@ -46,7 +46,19 @@ vim.lsp.config("golangci_lint_ls", {
   on_attach = on_attach,
   capabilities = capabilities,
   init_options = {
-    command = { "golangci-lint", "run", "--out-format", "json", "--issues-exit-code=1" },
+    command = {
+      "golangci-lint",
+      "run",
+      "--output.text.path=",
+      "--output.tab.path=",
+      "--output.html.path=",
+      "--output.checkstyle.path=",
+      "--output.junit-xml.path=",
+      "--output.teamcity.path=",
+      "--output.sarif.path=",
+      "--show-stats=false",
+      "--output.json.path=stdout",
+    },
   },
 })
 

@@ -81,6 +81,7 @@ cmp.setup {
   },
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
+    { name = "copilot" },
     { name = "go_deep", keyword_length = 3, max_item_count = 5 },
     { name = "luasnip" },
     { name = "buffer",    option = { get_bufnrs = bufopt } },
@@ -101,6 +102,7 @@ cmp.setup {
       with_text = true,
       menu = {
         nvim_lsp = "[LSP]",
+        copilot = "[Copilot]",
         go_deep = "[GoDeep]",
         luasnip = "[Snippet]",
         buffer = "[Buffer]",
