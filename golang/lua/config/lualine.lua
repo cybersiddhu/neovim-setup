@@ -23,7 +23,33 @@ require("lualine").setup({
 			{"b:gitsigns_head", icon = ""}, 
 			{"diff", source = diff_source },
 		},
-		lualine_c = {""},
+		lualine_c = {
+      {
+        function()
+          local status = require("sidekick.status").get()
+          return status and "󰚩 " or ""
+        end,
+        cond = function()
+          local ok, sidekick = pcall(require, "sidekick.status")
+          return ok and sidekick.get() ~= nil
+        end,
+        color = function()
+          local status = require("sidekick.status").get()
+          return { fg = (status and status.busy) and "#EBCB8B" or "#81A1C1" }
+        end,
+      },
+      {
+        function()
+          local sessions = require("sidekick.status").cli()
+          return "󱚣 " .. (#sessions > 0 and #sessions or "")
+        end,
+        cond = function()
+          local ok, sidekick = pcall(require, "sidekick.status")
+          return ok and #sidekick.cli() > 0
+        end,
+        color = { fg = "#88C0D0" },
+      },
+    },
 		lualine_x = {""},
 		lualine_y = { "fileformat", "filetype", "progress" },
 		lualine_z = {
