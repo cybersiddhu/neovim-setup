@@ -111,6 +111,17 @@ return {
     end,
   },
   {
+    "folke/sidekick.nvim",
+    cmd = "Sidekick",
+    keys = {
+      { "<leader>aa", function() require("sidekick.cli").toggle() end, desc = "Toggle AI CLI" },
+      { "<leader>as", function() require("sidekick").nes_update() end, desc = "Update NES" },
+    },
+    opts = {
+      -- configuration options here
+    },
+  },
+  {
     "nvim-telescope/telescope.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
