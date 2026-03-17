@@ -1,5 +1,10 @@
 local tele = require "telescope"
 tele.setup({
+  extensions = {
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown({}),
+    },
+  },
   pickers = {
     find_files = {
       find_command = {
@@ -11,6 +16,7 @@ tele.setup({
 tele.load_extension("fzf")
 tele.load_extension("file_browser")
 tele.load_extension("aerial")
+tele.load_extension("ui-select")
 local utils = require("utils")
 
 utils.map("n", "<Leader>tR", "<Cmd>Telescope aerial theme=ivy<CR>")
