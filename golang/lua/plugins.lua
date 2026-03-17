@@ -116,6 +116,9 @@ return {
     keys = {
       { "<leader>aa", function() require("sidekick.cli").toggle() end, desc = "Toggle AI CLI" },
       { "<leader>as", function() require("sidekick").nes_update() end, desc = "Update NES" },
+      { "[h", function() require("sidekick").nes_hunk_prev() end, desc = "Previous NES Hunk" },
+      { "]h", function() require("sidekick").nes_hunk_next() end, desc = "Next NES Hunk" },
+      { "<leader>ah", function() require("sidekick").nes_hunk_apply() end, desc = "Apply Current Hunk" },
     },
     opts = {
       -- configuration options here
