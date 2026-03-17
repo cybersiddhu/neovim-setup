@@ -111,31 +111,11 @@ return {
     end,
   },
   {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    cmd = {
-      "CopilotChat",
-      "CopilotChatOpen",
-      "CopilotChatClose",
-      "CopilotChatToggle",
-      "CopilotChatReset",
-      "CopilotChatStop",
-      "CopilotChatModels",
-      "CopilotChatPrompts",
-    },
-    dependencies = {
-      { "nvim-lua/plenary.nvim", branch = "master" },
-      { "zbirenbaum/copilot.lua" },
-    },
-    config = function()
-      require("config.copilot_chat")
-    end,
-  },
-
-  {
     "nvim-telescope/telescope.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-file-browser.nvim",
+      "nvim-telescope/telescope-ui-select.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-telescope/telescope-symbols.nvim",
     },
