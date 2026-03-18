@@ -114,15 +114,23 @@ return {
     "folke/sidekick.nvim",
     cmd = "Sidekick",
     keys = {
-      { "<leader>aa", function() require("sidekick.cli").toggle() end, desc = "Toggle AI CLI" },
-      { "<leader>as", function() require("sidekick").nes_update() end, desc = "Update NES" },
-      { "[h", function() require("sidekick").nes_hunk_prev() end, desc = "Previous NES Hunk" },
-      { "]h", function() require("sidekick").nes_hunk_next() end, desc = "Next NES Hunk" },
-      { "<leader>ah", function() require("sidekick").nes_hunk_apply() end, desc = "Apply Current Hunk" },
+      { "<c-.>",      function() require("sidekick.cli").toggle() end,                              mode = { "n", "t", "i", "x" }, desc = "Sidekick Toggle" },
+      { "<leader>aa", function() require("sidekick.cli").toggle() end,                              desc = "Toggle AI CLI" },
+      { "<leader>as", function() require("sidekick.cli").select() end,                              desc = "Select AI CLI" },
+      { "<leader>ad", function() require("sidekick.cli").close() end,                               desc = "Close AI CLI Session" },
+      { "<leader>ac", function() require("sidekick.cli").toggle({ name = "claude", focus = true }) end, desc = "Toggle Claude" },
+      { "<leader>at", function() require("sidekick.cli").send({ msg = "{this}" }) end,              mode = { "n", "x" }, desc = "Send This to CLI" },
+      { "<leader>af", function() require("sidekick.cli").send({ msg = "{file}" }) end,              desc = "Send File to CLI" },
+      { "<leader>av", function() require("sidekick.cli").send({ msg = "{selection}" }) end,         mode = { "x" }, desc = "Send Selection to CLI" },
+      { "<leader>ap", function() require("sidekick.cli").prompt() end,                              mode = { "n", "x" }, desc = "Sidekick Prompt" },
+      { "[h",         function() require("sidekick.nes").jump() end,                                desc = "Jump to NES Hunk" },
+      { "]h",         function() require("sidekick.nes").jump() end,                                desc = "Jump to NES Hunk" },
+      { "<leader>ah", function() require("sidekick.nes").apply() end,                               desc = "Apply NES Hunk" },
+      { "<leader>ax", function() require("sidekick.nes").clear() end,                               desc = "Clear NES" },
     },
-    opts = {
-      -- configuration options here
-    },
+    config = function()
+      require("config.sidekick")
+    end,
   },
   {
     "nvim-telescope/telescope.nvim",
