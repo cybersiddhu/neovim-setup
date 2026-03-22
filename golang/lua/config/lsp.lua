@@ -35,7 +35,7 @@ local on_attach = function(_, bufnr)
   keymaps_on_attach(bufnr)
 end
 
-for _, lsp in ipairs({ "dockerls", "yamlls", "graphql", "marksman" }) do
+for _, lsp in ipairs({ "dockerls", "yamlls", "graphql", "marksman", "just_ls" }) do
   vim.lsp.config(lsp, {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -133,6 +133,7 @@ vim.lsp.config("jsonls", {
   },
 })
 
+vim.lsp.enable("just_ls")
 vim.lsp.enable("dockerls")
 vim.lsp.enable("yamlls")
 vim.lsp.enable("graphql")
