@@ -70,6 +70,7 @@ return {
     "saghen/blink.cmp",
     lazy = false,
     version = "*",
+    build = "cargo build --release",
     dependencies = {
       "fang2hou/blink-copilot",
       { "saghen/blink.compat", version = "*", opts = {} },
