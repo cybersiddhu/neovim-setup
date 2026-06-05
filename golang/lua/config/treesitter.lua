@@ -67,8 +67,10 @@ local text_objects = {
   },
 }
 local refactor = {
-  highlight_definitions = { enable = true },
-  highlight_current_scope = { enable = true },
+  -- disabled: upstream nil-node bug in CursorHold → containing_scope → node:parent()
+  -- LSP documentHighlight provides equivalent symbol highlighting more reliably
+  highlight_definitions = { enable = false },
+  highlight_current_scope = { enable = false },
   smart_rename = {
     enable = true,
     keymaps = {

@@ -31,8 +31,21 @@ local function keymaps_on_attach(bufnr)
   buf_set_keymap("x", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
   buf_set_keymap("v", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
 end
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   keymaps_on_attach(bufnr)
+  if client:supports_method("textDocument/documentHighlight") then
+    local group = vim.api.nvim_create_augroup("lsp_document_highlight_" .. bufnr, { clear = true })
+    vim.api.nvim_create_autocmd("CursorHold", {
+      group = group,
+      buffer = bufnr,
+      callback = vim.lsp.buf.document_highlight,
+    })
+    vim.api.nvim_create_autocmd("CursorMoved", {
+      group = group,
+      buffer = bufnr,
+      callback = vim.lsp.buf.clear_references,
+    })
+  end
 end
 
 for _, lsp in ipairs({ "dockerls", "yamlls", "graphql", "marksman", "just_ls" }) do
@@ -64,6 +77,19 @@ vim.lsp.config("golangci_lint_ls", {
 
 local on_attach_gopls = function(client, bufnr)
   keymaps_on_attach(bufnr)
+  if client:supports_method("textDocument/documentHighlight") then
+    local group = vim.api.nvim_create_augroup("lsp_document_highlight_" .. bufnr, { clear = true })
+    vim.api.nvim_create_autocmd("CursorHold", {
+      group = group,
+      buffer = bufnr,
+      callback = vim.lsp.buf.document_highlight,
+    })
+    vim.api.nvim_create_autocmd("CursorMoved", {
+      group = group,
+      buffer = bufnr,
+      callback = vim.lsp.buf.clear_references,
+    })
+  end
   if client:supports_method("textDocument/formatting") then
     vim.api.nvim_clear_autocmds({ group = go_format_group, buffer = bufnr })
     vim.api.nvim_create_autocmd("BufWritePre", {
