@@ -67,31 +67,34 @@ return {
   -- lsp and snippets
   { "b0o/schemastore.nvim" },
   {
-    "hrsh7th/nvim-cmp",
+    "saghen/blink.cmp",
+    lazy = false,
+    version = "*",
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "f3fora/cmp-spell",
-      "hrsh7th/cmp-calc",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-nvim-lsp-document-symbol",
-      "hrsh7th/cmp-cmdline",
-      "octaltree/cmp-look",
-      "ray-x/cmp-treesitter",
-      "onsails/lspkind-nvim",
+      "fang2hou/blink-copilot",
+      { "saghen/blink.compat", version = "*", opts = {} },
       {
         "L3MON4D3/LuaSnip",
-        dependencies = {
-          "saadparwaiz1/cmp_luasnip",
-          "rafamadriz/friendly-snippets",
-        },
+        dependencies = { "rafamadriz/friendly-snippets" },
         config = function()
           require("luasnip.loaders.from_vscode").lazy_load()
         end,
       },
+      -- nvim-cmp sources kept via blink.compat
+      "octaltree/cmp-look",
+      "hrsh7th/cmp-calc",
+      "f3fora/cmp-spell",
+      "ray-x/cmp-treesitter",
     },
     config = function()
       require("config.autocomplete")
+    end,
+  },
+  {
+    "copilotlsp-nvim/copilot-lsp",
+    lazy = false,
+    config = function()
+      require("config.copilot")
     end,
   },
   {
