@@ -1,8 +1,7 @@
 -- lsp and related configuration
 local opts = { noremap = true, silent = true }
-local cmp_nvim_lsp = require "cmp_nvim_lsp"
 local buf_set_keymap = vim.keymap.set
-local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("blink.cmp").get_lsp_capabilities()
 local go_format_group = vim.api.nvim_create_augroup("go-lsp-format", { clear = true })
 
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
