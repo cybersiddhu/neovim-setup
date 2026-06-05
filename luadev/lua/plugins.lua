@@ -73,7 +73,6 @@ return {
     build = "cargo build --release",
     dependencies = {
       "fang2hou/blink-copilot",
-      { "saghen/blink.compat", version = "*", opts = {} },
       {
         "L3MON4D3/LuaSnip",
         dependencies = { "rafamadriz/friendly-snippets" },
@@ -81,11 +80,6 @@ return {
           require("luasnip.loaders.from_vscode").lazy_load()
         end,
       },
-      -- nvim-cmp sources kept via blink.compat
-      "octaltree/cmp-look",
-      "hrsh7th/cmp-calc",
-      "f3fora/cmp-spell",
-      "ray-x/cmp-treesitter",
     },
     config = function()
       require("config.autocomplete")

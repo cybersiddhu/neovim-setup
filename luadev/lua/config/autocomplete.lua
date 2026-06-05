@@ -20,36 +20,13 @@ require("blink.cmp").setup({
     sources = { "path", "cmdline" },
   },
   sources = {
-    default = {
-      "lsp", "path", "snippets", "buffer",
-      "copilot", "look", "calc", "spell", "treesitter",
-    },
+    default = { "lsp", "path", "snippets", "buffer", "copilot" },
     providers = {
       copilot = {
         name = "copilot",
         module = "blink-copilot",
         score_offset = 100,
         async = true,
-      },
-      look = {
-        name = "look",
-        module = "blink.compat.source",
-        score_offset = -10,
-      },
-      calc = {
-        name = "calc",
-        module = "blink.compat.source",
-        score_offset = -10,
-      },
-      spell = {
-        name = "spell",
-        module = "blink.compat.source",
-        score_offset = -10,
-      },
-      treesitter = {
-        name = "treesitter",
-        module = "blink.compat.source",
-        score_offset = -20,
       },
     },
   },
