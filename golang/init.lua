@@ -14,4 +14,6 @@ if vim.fn.isdirectory(lazypath) == 0 then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("plugins")
+require("lazy").setup("plugins", {
+  rocks = { enabled = false },
+})
