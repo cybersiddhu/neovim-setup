@@ -62,7 +62,6 @@ return {
     version = "*",
     build = "cargo build --release",
     dependencies = {
-      "fang2hou/blink-copilot",
       {
         "L3MON4D3/LuaSnip",
         build = "make install_jsregexp",
@@ -74,13 +73,6 @@ return {
     },
     config = function()
       require("config.autocomplete")
-    end,
-  },
-  {
-    "copilotlsp-nvim/copilot-lsp",
-    lazy = false,
-    config = function()
-      require("config.copilot")
     end,
   },
   {
