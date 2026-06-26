@@ -6,8 +6,6 @@ return {
     lazy = false,
     build = ":TSUpdate",
     dependencies = {
-      { "nvim-treesitter/nvim-treesitter-textobjects", branch = "master" },
-      { "nvim-treesitter/nvim-treesitter-refactor", branch = "master" },
       {
         "windwp/nvim-ts-autotag",
         config = function()
@@ -18,6 +16,14 @@ return {
     config = function()
       require("config.treesitter")
       require("config.folding")
+    end,
+  },
+  {
+    "echasnovski/mini.ai",
+    version = false,
+    event = "VeryLazy",
+    config = function()
+      require("config.mini-ai")
     end,
   },
   {
