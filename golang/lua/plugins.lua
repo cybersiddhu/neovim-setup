@@ -6,6 +6,7 @@ return {
     lazy = false,
     build = ":TSUpdate",
     dependencies = {
+      { "nvim-treesitter/nvim-treesitter-textobjects", branch = "master" },
       {
         "windwp/nvim-ts-autotag",
         config = function()
