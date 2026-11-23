@@ -1,183 +1,276 @@
--- plugin installation using packer
-return require("packer").startup(function(use)
-  use "wbthomason/packer.nvim" -- works
-  -- treesitter
-  use {
-    { "nvim-treesitter/nvim-treesitter",             run = { ":TSUpdate" } },
-    { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" },
-    { "nvim-treesitter/nvim-treesitter-refactor",    after = "nvim-treesitter-textobjects" },
-    { "windwp/nvim-ts-autotag",                      after = "nvim-treesitter-refactor" },
-    {
-      "hiphish/rainbow-delimiters.nvim",
-      tag = "v0.7.0",
-      after = "nvim-ts-autotag",
-      config = function()
-        require("config.treesitter")
-        require("config.folding")
-      end
-    },
-    {
-      "JoosepAlviste/nvim-ts-context-commentstring",
-      requires = { "numToStr/Comment.nvim" },
-      config = [[require("config.comment")]],
-    },
-    {
-      "nvim-treesitter/nvim-treesitter-context",
-      after = "nvim-ts-context-commentstring",
-      config = [[require("config.treesitter_context")]],
-    }, -- works
-    {
-      "shaunsingh/nord.nvim",
-      event = "VimEnter",
-      config = "vim.cmd[[colorscheme nord]]",
-    },
-    {
-      "stevearc/aerial.nvim",
-      config = [[require("config.aerial")]],
-    },
-  }
-  -- lsp and snipetts
-  use {
-    { "b0o/schemastore.nvim" },
-    { "hrsh7th/nvim-cmp" },
-    {
-      "hrsh7th/cmp-nvim-lsp",
-      requires = {
-        {
-          "neovim/nvim-lspconfig",
-          config = [[require("config.lsp")]],
-        }
-      }
-    },
-    { "hrsh7th/cmp-buffer" }, -- works
-    { "f3fora/cmp-spell" },   -- works,
-    { "hrsh7th/cmp-calc" },
-    { "hrsh7th/cmp-path" },
-    { "hrsh7th/cmp-nvim-lsp-document-symbol" },
-    { "hrsh7th/cmp-cmdline" },
-    { "octaltree/cmp-look" },
-    { "ray-x/cmp-treesitter" },
-    { "onsails/lspkind-nvim" }, -- works
-    {
-      "L3MON4D3/LuaSnip",
-      requires = {
-        { "saadparwaiz1/cmp_luasnip" },
-        { "rafamadriz/friendly-snippets" },
+-- plugin installation using lazy.nvim
+return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    branch = "master",
+    lazy = false,
+    build = ":TSUpdate",
+    dependencies = {
+      { "nvim-treesitter/nvim-treesitter-textobjects", branch = "master" },
+      {
+        "windwp/nvim-ts-autotag",
+        config = function()
+          require("nvim-ts-autotag").setup()
+        end,
       },
-      config = function()
-        require("config.autocomplete")
-        require("luasnip.loaders.from_vscode").load()
-      end,
-    }, -- works
-  }
-  -- telescope
-  use {
-    { "nvim-telescope/telescope.nvim",             requires = { "nvim-lua/plenary.nvim" } },
-    { "nvim-telescope/telescope-file-browser.nvim" },
-    {
-      "nvim-telescope/telescope-fzf-native.nvim",
-      run = "make",
-      config = [[require("config.telescope")]],
     },
-    { "nvim-telescope/telescope-symbols.nvim" },
-  }
-  -- tabline
-  use { "romgrk/barbar.nvim",
-    requires = { "nvim-tree/nvim-web-devicons" },
-    config = [[require("config.tabline")]],
-  }
-  -- git
-  use {
-    {
-      "lewis6991/gitsigns.nvim",
-      config = function()
-        require("gitsigns").setup({ current_line_blame = true })
-        vim.cmd [[highlight default link GitSignsCurrentLineBlame LineNr]]
-        require("utils").map("n", "<Leader>cb", "<Cmd>Gitsigns toggle_current_line_blame<CR>")
-      end
-    },
-    { "rhysd/git-messenger.vim" },
-    {
-      "pwntester/octo.nvim",
-      config = [[require("config.octo")]],
-    },
-  }
-  -- hop
-  use { "phaazon/hop.nvim", config = [[require("config.hop")]] }
-  -- notify
-  use { "rcarriga/nvim-notify",
-    event = "VimEnter",
     config = function()
-      vim.notify = require("notify")
+      require("config.treesitter")
+      require("config.folding")
     end,
-  }
-  -- statusline
-  use { "nvim-lualine/lualine.nvim",
-    event = "VimEnter",
-    config = [[require("config.lualine")]],
-  }
-  -- terminal
-  use { "voldikss/vim-floaterm",
-    event = "VimEnter",
-    config = [[require("config.floaterm")]],
-  }
-  -- editor configuration
-  use { "editorconfig/editorconfig-vim" }
-  -- autopair
-  use { "windwp/nvim-autopairs",
+  },
+  {
+    "echasnovski/mini.ai",
+    version = false,
+    event = "VeryLazy",
     config = function()
-      require('nvim-autopairs').setup {}
-    end
-  }
-  -- startup screen
-  use { "goolord/alpha-nvim",
+      require("config.mini-ai")
+    end,
+  },
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("config.rainbow_delimiters")
+    end,
+  },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    dependencies = { "numToStr/Comment.nvim" },
+    config = function()
+      require("config.comment")
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    branch = "master",
+    config = function()
+      require("config.treesitter_context")
+    end,
+  },
+  {
+    "shaunsingh/nord.nvim",
+    event = "VimEnter",
+    config = function()
+      vim.cmd([[colorscheme nord]])
+    end,
+  },
+  {
+    "stevearc/aerial.nvim",
+    config = function()
+      require("config.aerial")
+    end,
+  },
+
+  { "b0o/schemastore.nvim" },
+  {
+    "saghen/blink.cmp",
+    lazy = false,
+    version = "*",
+    build = "cargo build --release",
+    dependencies = {
+      {
+        "L3MON4D3/LuaSnip",
+        build = "make install_jsregexp",
+        dependencies = { "rafamadriz/friendly-snippets" },
+        config = function()
+          require("luasnip.loaders.from_vscode").lazy_load()
+        end,
+      },
+    },
+    config = function()
+      require("config.autocomplete")
+    end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = { "stevearc/conform.nvim" },
+    config = function()
+      require("config.lsp")
+    end,
+  },
+  -- prettier formatting (replaces archived null-ls)
+  {
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    config = function()
+      require("config.conform")
+    end,
+  },
+  {
+    "folke/sidekick.nvim",
+    cmd = "Sidekick",
+    keys = {
+      { "<c-.>",      function() require("sidekick.cli").toggle() end,                              mode = { "n", "t", "i", "x" }, desc = "Sidekick Toggle" },
+      { "<leader>aa", function() require("sidekick.cli").toggle() end,                              desc = "Toggle AI CLI" },
+      { "<leader>as", function() require("sidekick.cli").select() end,                              desc = "Select AI CLI" },
+      { "<leader>ad", function() require("sidekick.cli").close() end,                               desc = "Close AI CLI Session" },
+      { "<leader>ac", function() require("sidekick.cli").toggle({ name = "claude", focus = true }) end, desc = "Toggle Claude" },
+      { "<leader>at", function() require("sidekick.cli").send({ msg = "{this}" }) end,              mode = { "n", "x" }, desc = "Send This to CLI" },
+      { "<leader>af", function() require("sidekick.cli").send({ msg = "{file}" }) end,              desc = "Send File to CLI" },
+      { "<leader>av", function() require("sidekick.cli").send({ msg = "{selection}" }) end,         mode = { "x" }, desc = "Send Selection to CLI" },
+      { "<leader>ap", function() require("sidekick.cli").prompt() end,                              mode = { "n", "x" }, desc = "Sidekick Prompt" },
+      { "[h",         function() require("sidekick.nes").jump() end,                                desc = "Jump to NES Hunk" },
+      { "]h",         function() require("sidekick.nes").jump() end,                                desc = "Jump to NES Hunk" },
+      { "<leader>ah", function() require("sidekick.nes").apply() end,                               desc = "Apply NES Hunk" },
+      { "<leader>ax", function() require("sidekick.nes").clear() end,                               desc = "Clear NES" },
+    },
+    config = function()
+      require("config.sidekick")
+    end,
+  },
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-file-browser.nvim",
+      "nvim-telescope/telescope-ui-select.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      "nvim-telescope/telescope-symbols.nvim",
+    },
+    config = function()
+      require("config.telescope")
+    end,
+  },
+
+  {
+    "romgrk/barbar.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("config.tabline")
+    end,
+  },
+
+  {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require("gitsigns").setup({ current_line_blame = true })
+      vim.cmd([[highlight default link GitSignsCurrentLineBlame LineNr]])
+      require("utils").map("n", "<Leader>cb", "<Cmd>Gitsigns toggle_current_line_blame<CR>")
+    end,
+  },
+  { "rhysd/git-messenger.vim" },
+  {
+    "pwntester/octo.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("config.octo")
+    end,
+  },
+
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("config.flash")
+    end,
+  },
+  {
+    "rcarriga/nvim-notify",
+    event = "VimEnter",
+    config = function()
+      local notify = require("notify")
+      notify.setup({
+        timeout = 1000,
+      })
+      vim.notify = function(message, level, opts)
+        local notify_opts = opts or {}
+        if notify_opts.timeout == nil then
+          if level == vim.log.levels.ERROR then
+            notify_opts.timeout = 3500
+          elseif level == vim.log.levels.WARN then
+            notify_opts.timeout = 2200
+          else
+            notify_opts.timeout = 900
+          end
+        end
+        return notify(message, level, notify_opts)
+      end
+    end,
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    event = "VimEnter",
+    config = function()
+      require("config.lualine")
+    end,
+  },
+  {
+    "voldikss/vim-floaterm",
+    event = "VimEnter",
+    config = function()
+      require("config.floaterm")
+    end,
+  },
+
+  { "editorconfig/editorconfig-vim" },
+  {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup({})
+    end,
+  },
+  {
+    "goolord/alpha-nvim",
     config = function()
       require("config.alpha").setup()
     end,
-  }
-  -- file explorer
-  use { "nvim-tree/nvim-tree.lua",
+  },
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre",
+    config = function()
+      require("persistence").setup()
+    end,
+  },
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       require("config.nvim-tree")
     end,
-  }
-  use {
+  },
+  {
     "antosha417/nvim-lsp-file-operations",
+    dependencies = { "nvim-tree/nvim-tree.lua" },
     config = function()
       require("lsp-file-operations").setup()
-    end
-  }
-  use { "elihunter173/dirbuf.nvim" }
-  -- extra plugin for formatting
-  use { "jose-elias-alvarez/null-ls.nvim",
-    config = function()
-      require("config.null-ls")
     end,
-  }
-  -- test
-  use { "nvim-neotest/neotest",
-    requires = {
+  },
+
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
       "antoinemadec/FixCursorHold.nvim",
+      "nvim-lua/plenary.nvim",
       "nvim-neotest/neotest-plenary",
-      "haydenmeade/neotest-jest",
       "marilari88/neotest-vitest",
       "nvim-neotest/nvim-nio",
     },
-    config = [[require("config.neotest")]],
-  }
-  -- markdown
-  use {
-    "ellisonleao/glow.nvim",
     config = function()
-      require("glow").setup({ pager = true })
+      require("config.neotest")
     end,
-  }
-  -- semantic highlights
-  use { "m-demare/hlargs.nvim",
+  },
+  {
+    "m-demare/hlargs.nvim",
     config = function()
       require("hlargs").setup()
     end,
-  }
-  --text objects
-  use { "wellle/targets.vim" }
-end)
+  },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    config = function()
+      require("render-markdown").setup({
+        enabled = true,
+        file_types = { "markdown" },
+      })
+    end,
+  },
+  { "NoahTheDuke/vim-just" },
+}
