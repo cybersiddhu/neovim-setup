@@ -1,14 +1,29 @@
 local tele = require "telescope"
-tele.setup({})
+tele.setup({
+  extensions = {
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown({}),
+    },
+  },
+  pickers = {
+    find_files = {
+      find_command = {
+        "fd", "--unrestricted", "--glob", "--type", "f", "--exclude", ".git"
+      }
+    }
+  }
+})
 tele.load_extension("fzf")
 tele.load_extension("file_browser")
 tele.load_extension("aerial")
+tele.load_extension("ui-select")
+local utils = require("utils")
 
-local utils = require "utils"
-utils.map("n","<Leader>tR","<Cmd>Telescope aerial theme=ivy<CR>")
-utils.map("n", "<Leader>tf", [[<Cmd>lua require("utils").project_file_finder()<CR>]])
-utils.map("n", "<Leader>tb", [[<Cmd>lua require("utils").project_file_manager()<CR>]])
-utils.map("n", "<Leader>tm", [[<Cmd>lua require("utils").home_file_manager()<CR>]])
+utils.map("n", "<Leader>tR", "<Cmd>Telescope aerial theme=ivy<CR>")
+utils.map("n", "<Leader>tf", utils.project_file_finder)
+utils.map("n", "<Leader>tb", utils.project_file_manager)
+utils.map("n", "<Leader>tm", utils.home_file_manager)
+utils.map("n", "<Leader>tF", utils.godev_file_finder)
 utils.map("n", "<Leader>tg", "<Cmd>Telescope live_grep theme=ivy<CR>")
 utils.map("n", "<Leader>th", "<Cmd>Telescope help_tags theme=ivy<CR>")
 utils.map("n", "<Leader>tc", "<Cmd>Telescope commands theme=ivy<CR>")

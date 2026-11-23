@@ -1,24 +1,25 @@
 -- plugin installation using lazy.nvim
 return {
-  -- treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     branch = "master",
     lazy = false,
     build = ":TSUpdate",
     dependencies = {
+      -- query files only: mini.ai reads its textobjects queries
       { "nvim-treesitter/nvim-treesitter-textobjects", branch = "master" },
-      { "nvim-treesitter/nvim-treesitter-refactor", branch = "master" },
-      {
-        "windwp/nvim-ts-autotag",
-        config = function()
-          require("nvim-ts-autotag").setup()
-        end,
-      },
     },
     config = function()
       require("config.treesitter")
       require("config.folding")
+    end,
+  },
+  {
+    "echasnovski/mini.ai",
+    version = false,
+    event = "VeryLazy",
+    config = function()
+      require("config.mini-ai")
     end,
   },
   {
@@ -30,13 +31,13 @@ return {
   },
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
-    dependencies = { "b3nj5m1n/kommentary" },
+    dependencies = { "numToStr/Comment.nvim" },
     config = function()
       require("config.comment")
     end,
   },
   {
-    "lewis6991/nvim-treesitter-context",
+    "nvim-treesitter/nvim-treesitter-context",
     branch = "master",
     config = function()
       require("config.treesitter_context")
@@ -64,17 +65,27 @@ return {
     end,
   },
 
-  -- lsp and snippets
   { "b0o/schemastore.nvim" },
+  -- lua_ls workspace libraries for neovim runtime + plugins, loaded on demand
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        -- luvit types when `vim.uv` is used
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
+  },
   {
     "saghen/blink.cmp",
     lazy = false,
     version = "*",
     build = "cargo build --release",
     dependencies = {
-      "fang2hou/blink-copilot",
       {
         "L3MON4D3/LuaSnip",
+        build = "make install_jsregexp",
         dependencies = { "rafamadriz/friendly-snippets" },
         config = function()
           require("luasnip.loaders.from_vscode").lazy_load()
@@ -86,35 +97,39 @@ return {
     end,
   },
   {
-    "copilotlsp-nvim/copilot-lsp",
-    lazy = false,
-    config = function()
-      require("config.copilot")
-    end,
-  },
-  {
-    "simrat39/inlay-hints.nvim",
-    config = function()
-      require("inlay-hints").setup({
-        only_current_line = true,
-        eol = { right_align = true },
-      })
-    end,
-  },
-  {
     "neovim/nvim-lspconfig",
     config = function()
       require("config.lsp")
     end,
   },
-
-  -- telescope
+  {
+    "folke/sidekick.nvim",
+    cmd = "Sidekick",
+    keys = {
+      { "<c-.>",      function() require("sidekick.cli").toggle() end,                              mode = { "n", "t", "i", "x" }, desc = "Sidekick Toggle" },
+      { "<leader>aa", function() require("sidekick.cli").toggle() end,                              desc = "Toggle AI CLI" },
+      { "<leader>as", function() require("sidekick.cli").select() end,                              desc = "Select AI CLI" },
+      { "<leader>ad", function() require("sidekick.cli").close() end,                               desc = "Close AI CLI Session" },
+      { "<leader>ac", function() require("sidekick.cli").toggle({ name = "claude", focus = true }) end, desc = "Toggle Claude" },
+      { "<leader>at", function() require("sidekick.cli").send({ msg = "{this}" }) end,              mode = { "n", "x" }, desc = "Send This to CLI" },
+      { "<leader>af", function() require("sidekick.cli").send({ msg = "{file}" }) end,              desc = "Send File to CLI" },
+      { "<leader>av", function() require("sidekick.cli").send({ msg = "{selection}" }) end,         mode = { "x" }, desc = "Send Selection to CLI" },
+      { "<leader>ap", function() require("sidekick.cli").prompt() end,                              mode = { "n", "x" }, desc = "Sidekick Prompt" },
+      { "[h",         function() require("sidekick.nes").jump() end,                                desc = "Jump to NES Hunk" },
+      { "]h",         function() require("sidekick.nes").jump() end,                                desc = "Jump to NES Hunk" },
+      { "<leader>ah", function() require("sidekick.nes").apply() end,                               desc = "Apply NES Hunk" },
+      { "<leader>ax", function() require("sidekick.nes").clear() end,                               desc = "Clear NES" },
+    },
+    config = function()
+      require("config.sidekick")
+    end,
+  },
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.1",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-file-browser.nvim",
+      "nvim-telescope/telescope-ui-select.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-telescope/telescope-symbols.nvim",
     },
@@ -123,7 +138,6 @@ return {
     end,
   },
 
-  -- tabline
   {
     "romgrk/barbar.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -132,7 +146,6 @@ return {
     end,
   },
 
-  -- git
   {
     "lewis6991/gitsigns.nvim",
     config = function()
@@ -144,79 +157,126 @@ return {
   { "rhysd/git-messenger.vim" },
   {
     "pwntester/octo.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
     config = function()
       require("config.octo")
     end,
   },
 
-  -- hop
   {
-    "phaazon/hop.nvim",
+    "folke/flash.nvim",
+    event = "VeryLazy",
     config = function()
-      require("config.hop")
+      require("config.flash")
     end,
   },
-
-  -- notify
   {
     "rcarriga/nvim-notify",
     event = "VimEnter",
     config = function()
-      vim.notify = require("notify")
+      local notify = require("notify")
+      notify.setup({
+        timeout = 1000,
+      })
+      vim.notify = function(message, level, opts)
+        local notify_opts = opts or {}
+        if notify_opts.timeout == nil then
+          if level == vim.log.levels.ERROR then
+            notify_opts.timeout = 3500
+          elseif level == vim.log.levels.WARN then
+            notify_opts.timeout = 2200
+          else
+            notify_opts.timeout = 900
+          end
+        end
+        return notify(message, level, notify_opts)
+      end
     end,
   },
-
-  -- statusline
   {
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
-    commit = "016a20711ee595a11426f9c1f4ab3e04967df553",
     config = function()
       require("config.lualine")
     end,
   },
 
   { "editorconfig/editorconfig-vim" },
-
-  -- autopair
   {
     "windwp/nvim-autopairs",
     config = function()
       require("nvim-autopairs").setup({})
     end,
   },
-
-  -- startup screen
   {
     "goolord/alpha-nvim",
     config = function()
       require("config.alpha").setup()
     end,
   },
-
-  -- file explorer
   {
-    "kyazdani42/nvim-tree.lua",
+    "folke/persistence.nvim",
+    event = "BufReadPre",
+    config = function()
+      require("persistence").setup()
+    end,
+  },
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       require("config.nvim-tree")
     end,
   },
+  {
+    "antosha417/nvim-lsp-file-operations",
+    dependencies = { "nvim-tree/nvim-tree.lua" },
+    config = function()
+      require("lsp-file-operations").setup()
+    end,
+  },
 
-  -- documentation
+  -- LuaCATS annotation generator
   {
     "danymat/neogen",
     config = function()
       require("config.neogen")
     end,
   },
-
-  -- semantic highlights
+  -- plenary/busted specs (tests/**/*_spec.lua)
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-neotest/neotest-plenary",
+      "nvim-neotest/nvim-nio",
+    },
+    config = function()
+      require("config.neotest")
+    end,
+  },
   {
     "m-demare/hlargs.nvim",
     config = function()
       require("hlargs").setup()
     end,
   },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    config = function()
+      require("render-markdown").setup({
+        enabled = true,
+        file_types = { "markdown" },
+      })
+    end,
+  },
+  { "NoahTheDuke/vim-just" },
 
   -- my custom plugin
   {
@@ -229,25 +289,19 @@ return {
           require("config.floaterm")
         end,
       },
+      -- floating vim.ui.input prompt used by coding-assistant
       {
         "stevearc/dressing.nvim",
         config = function()
-          require("dressing").setup({ input = { width = 60, prefer_width = 70 } })
+          require("dressing").setup({
+            input = { width = 60, prefer_width = 70 },
+            select = { enabled = false }, -- telescope-ui-select owns vim.ui.select
+          })
         end,
       },
     },
     config = function()
       require("coding-assistant").setup()
-    end,
-  },
-
-  -- text objects
-  { "wellle/targets.vim" },
-
-  {
-    "james1236/backseat.nvim",
-    config = function()
-      require("backseat").setup()
     end,
   },
 }

@@ -1,7 +1,7 @@
-local cmd = vim.cmd -- to execute Vim commands e.g. cmd('pwd')
-local fn = vim.fn -- to call Vim functions e.g. fn.bufnr()
-local g = vim.g -- a table to access global variables
-local opt = vim.opt -- to set options
+local cmd = vim.cmd  -- to execute Vim commands e.g. cmd('pwd')
+local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
+local g = vim.g      -- a table to access global variables
+local opt = vim.opt  -- to set options
 local o = vim.o -- to set global options
 local bo = vim.bo -- to set buffer-scoped options
 local wo = vim.wo -- to set window-scoped options
@@ -51,5 +51,7 @@ o.joinspaces = false
 o.splitright = true
 o.splitbelow = true
 o.textwidth = 80
-o.colorcolumn = tostring(o.textwidth + 1)
+opt.colorcolumn = "81"
 cmd "cabbr <expr> %% expand('%:p:h')"
+-- views can only be fully collapsed with the global statusline
+opt.laststatus = 3

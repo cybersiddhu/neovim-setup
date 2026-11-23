@@ -28,11 +28,15 @@ local function keymaps_on_attach(bufnr)
   buf_set_keymap("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
   buf_set_keymap("x", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
   buf_set_keymap("v", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
+  -- native inlay hints (replaces archived simrat39/inlay-hints.nvim)
+  buf_set_keymap("n", "<Leader>ih", function()
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
+  end, bufopts)
 end
 
 local on_attach = function(client, bufnr)
   keymaps_on_attach(bufnr)
-  if client.supports_method("textDocument/documentHighlight") then
+  if client:supports_method("textDocument/documentHighlight") then
     local group = vim.api.nvim_create_augroup("lsp_document_highlight_" .. bufnr, { clear = true })
     vim.api.nvim_create_autocmd("CursorHold", {
       group = group,
@@ -47,59 +51,34 @@ local on_attach = function(client, bufnr)
   end
 end
 
-vim.lsp.config("yamlls", {
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
+for _, lsp in ipairs({ "yamlls", "marksman", "just" }) do
+  vim.lsp.config(lsp, {
+    on_attach = on_attach,
+    capabilities = capabilities,
+  })
+end
 
+-- lua_ls: runtime path and workspace libraries (neovim runtime, plugins,
+-- luv types) are supplied by lazydev.nvim; a project .luarc.json still wins
 vim.lsp.config("lua_ls", {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  on_init = function(client)
-    if client.workspace_folders then
-      local path = client.workspace_folders[1].name
-      local has_local_luarc = vim.fn.filereadable(path .. "/.luarc.json") == 1
-        or vim.fn.filereadable(path .. "/.luarc.jsonc") == 1
-      if path ~= vim.fn.stdpath("config") and has_local_luarc then
-        return
-      end
-    end
-
-    client.config.settings.Lua = vim.tbl_deep_extend(
-      "force",
-      client.config.settings.Lua, {
-        runtime = {
-          version = "LuaJIT",
-          path = {
-            "lua/?.lua",
-            "lua/?/init.lua",
-          },
-        },
-        workspace = {
-          checkThirdParty = false,
-          library = {
-            vim.env.VIMRUNTIME,
-          },
-        },
-      })
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
   end,
+  capabilities = capabilities,
   settings = {
     Lua = {
-      diagnostics = {
-        globals = { "vim" },
-      },
-      codeLens = {
-        enable = true,
-      },
-      telemetry = {
-        enable = false,
-      },
+      runtime = { version = "LuaJIT" },
+      workspace = { checkThirdParty = false },
+      codeLens = { enable = true },
+      telemetry = { enable = false },
       completion = {
-        callSnippet = "Both",
-        keywordSnippet = "Both",
+        callSnippet = "Replace",
+        keywordSnippet = "Replace",
       },
       hint = {
         enable = true,
+        arrayIndex = "Disable",
         semicolon = "Disable",
         setType = true,
       },
@@ -110,7 +89,6 @@ vim.lsp.config("lua_ls", {
 vim.lsp.config("vimls", {
   on_attach = require("aerial").on_attach
 })
-
 vim.lsp.config("jsonls", {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -122,7 +100,12 @@ vim.lsp.config("jsonls", {
   },
 })
 
-vim.lsp.enable("yamlls")
 vim.lsp.enable("lua_ls")
+vim.lsp.enable("yamlls")
+vim.lsp.enable("marksman")
+vim.lsp.enable("just")
 vim.lsp.enable("vimls")
 vim.lsp.enable("jsonls")
+-- github copilot language server (copilot-language-server --stdio);
+-- powers sidekick.nvim next edit suggestions. Sign in with :LspCopilotSignIn
+vim.lsp.enable("copilot")
