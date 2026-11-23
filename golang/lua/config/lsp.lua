@@ -47,7 +47,7 @@ local on_attach = function(client, bufnr)
   end
 end
 
-for _, lsp in ipairs({ "dockerls", "yamlls", "graphql", "marksman", "just_ls" }) do
+for _, lsp in ipairs({ "dockerls", "yamlls", "graphql", "marksman", "just" }) do
   vim.lsp.config(lsp, {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -158,7 +158,7 @@ vim.lsp.config("jsonls", {
   },
 })
 
-vim.lsp.enable("just_ls")
+vim.lsp.enable("just")
 vim.lsp.enable("dockerls")
 vim.lsp.enable("yamlls")
 vim.lsp.enable("graphql")
