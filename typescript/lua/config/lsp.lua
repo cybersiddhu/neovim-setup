@@ -59,9 +59,22 @@ local on_attach_no_format = function(client, bufnr)
   on_attach(client, bufnr)
 end
 
+-- lspconfig's own on_attach defines the server's :Lsp* buffer commands
+-- (e.g. :LspTexlabBuild, :LspEslintFixAll); run it before ours instead of
+-- replacing it
+local function with_default_on_attach(name, fn)
+  local default = vim.lsp.config[name] and vim.lsp.config[name].on_attach
+  return function(client, bufnr)
+    if default then
+      default(client, bufnr)
+    end
+    fn(client, bufnr)
+  end
+end
+
 for _, lsp in ipairs({ "cssls", "dockerls", "yamlls", "graphql", "marksman", "just", "eslint", "oxlint" }) do
   vim.lsp.config(lsp, {
-    on_attach = on_attach,
+    on_attach = with_default_on_attach(lsp, on_attach),
     capabilities = capabilities,
   })
 end
@@ -84,7 +97,7 @@ local ts_inlay_hints = {
 -- TypeScript <= 6. For a TypeScript 7+ project use lspconfig's native "tsc"
 -- server instead (`vim.lsp.enable("tsc")`).
 vim.lsp.config("ts_ls", {
-  on_attach = on_attach_no_format,
+  on_attach = with_default_on_attach("ts_ls", on_attach_no_format),
   capabilities = capabilities,
   settings = {
     typescript = { inlayHints = ts_inlay_hints },
