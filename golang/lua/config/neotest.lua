@@ -11,7 +11,10 @@ neotest.setup({
     },
     adapters = {
       require("neotest-plenary"),
-      require("neotest-go"),
+      require("neotest-golang")({
+        runner = "gotestsum",   -- writes test JSON to a file instead of parsing stdout
+        testify_enabled = true, -- discover testify suite methods (suite.Run)
+      }),
     },
   })
 

@@ -234,7 +234,8 @@ return {
       "antoinemadec/FixCursorHold.nvim",
       "nvim-lua/plenary.nvim",
       "nvim-neotest/neotest-plenary",
-      "nvim-neotest/neotest-go",
+      -- v1.x: v2+ requires nvim-treesitter's main branch (setups pin master)
+      { "fredrikaverpil/neotest-golang", version = "1.*" },
       "nvim-neotest/nvim-nio",
     },
     config = function()
