@@ -11,7 +11,8 @@ function M.setup()
 	return colors[math.random(#colors)]
   end
   local function footer()
-    local total_plugins = #vim.tbl_keys(packer_plugins)
+    local ok, lazy = pcall(require, "lazy")
+    local total_plugins = ok and lazy.stats().count or 0
     local datetime = os.date(" %d-%m-%Y   %H:%M:%S")
     local plugins_text = "   "
       .. total_plugins
@@ -48,9 +49,11 @@ function M.setup()
     dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
     dashboard.button("b", "  New buffer", ":tabnew <CR>"),
     dashboard.button("r", "  Recently used files", ":Telescope oldfiles theme=ivy<CR>"),
+    dashboard.button("s", "  Restore session", "<Cmd>lua require('persistence').load()<CR>"),
+    dashboard.button("S", "󰙅  Select session", "<Cmd>lua require('persistence').select()<CR>"),
     dashboard.button("t", "  Find text", ":Telescope live_grep theme=ivy<CR>"),
     dashboard.button("c", "  Configuration", ":e $MYVIMRC<CR>"),
-    dashboard.button("u", "  Update plugins", ":PackerUpdate<CR>"),
+    dashboard.button("u", "  Update plugins", ":Lazy sync<CR>"),
     dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
   }
   dashboard.section.buttons.opts.hl = "Keyword"

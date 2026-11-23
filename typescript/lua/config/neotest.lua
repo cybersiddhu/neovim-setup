@@ -11,7 +11,6 @@ neotest.setup({
   },
   adapters = {
     require("neotest-plenary"),
-    require("neotest-jest")({ jestCommand = "yarn test --" }),
     require("neotest-vitest")
   },
 })
