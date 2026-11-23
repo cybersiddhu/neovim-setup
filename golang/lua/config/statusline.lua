@@ -1,1 +1,0 @@
--- statusline configuration

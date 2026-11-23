@@ -6,13 +6,8 @@ return {
     lazy = false,
     build = ":TSUpdate",
     dependencies = {
+      -- query files only: mini.ai reads its textobjects queries
       { "nvim-treesitter/nvim-treesitter-textobjects", branch = "master" },
-      {
-        "windwp/nvim-ts-autotag",
-        config = function()
-          require("nvim-ts-autotag").setup()
-        end,
-      },
     },
     config = function()
       require("config.treesitter")
@@ -254,11 +249,11 @@ return {
   },
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    ft = { "markdown", "Avante" },
+    ft = { "markdown" },
     config = function()
       require("render-markdown").setup({
         enabled = true,
-        file_types = { "markdown", "Avante" },
+        file_types = { "markdown" },
       })
     end,
   },
