@@ -100,6 +100,8 @@ return {
   },
   {
     "folke/sidekick.nvim",
+    -- load on LspAttach so NES autocmds exist before any keypress
+    event = "LspAttach",
     cmd = "Sidekick",
     keys = {
       { "<c-.>",      function() require("sidekick.cli").toggle() end,                              mode = { "n", "t", "i", "x" }, desc = "Sidekick Toggle" },
@@ -111,6 +113,10 @@ return {
       { "<leader>af", function() require("sidekick.cli").send({ msg = "{file}" }) end,              desc = "Send File to CLI" },
       { "<leader>av", function() require("sidekick.cli").send({ msg = "{selection}" }) end,         mode = { "x" }, desc = "Send Selection to CLI" },
       { "<leader>ap", function() require("sidekick.cli").prompt() end,                              mode = { "n", "x" }, desc = "Sidekick Prompt" },
+      { "<Tab>", function()
+        -- jump to the NES hunk, or apply it; fall back to normal <Tab>
+        if not require("sidekick").nes_jump_or_apply() then return "<Tab>" end
+      end, expr = true, desc = "Goto/Apply NES Hunk" },
       { "[h",         function() require("sidekick.nes").jump() end,                                desc = "Jump to NES Hunk" },
       { "]h",         function() require("sidekick.nes").jump() end,                                desc = "Jump to NES Hunk" },
       { "<leader>ah", function() require("sidekick.nes").apply() end,                               desc = "Apply NES Hunk" },

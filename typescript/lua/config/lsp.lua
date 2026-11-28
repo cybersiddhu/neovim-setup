@@ -136,3 +136,23 @@ vim.lsp.enable("jsonls")
 -- github copilot language server (copilot-language-server --stdio);
 -- powers sidekick.nvim next edit suggestions. Sign in with :LspCopilotSignIn
 vim.lsp.enable("copilot")
+
+-- copilot inline ghost text (native nvim 0.12 inlineCompletion);
+-- <C-l> accepts, <M-]>/<M-[> cycle suggestions
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("copilot_inline", { clear = true }),
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if not client or client.name ~= "copilot" then return end
+    vim.lsp.inline_completion.enable(true, { bufnr = ev.buf })
+    vim.keymap.set("i", "<C-l>", function()
+      if not vim.lsp.inline_completion.get() then return "<C-l>" end
+    end, { buffer = ev.buf, expr = true, desc = "Accept Copilot suggestion" })
+    vim.keymap.set("i", "<M-]>", function()
+      vim.lsp.inline_completion.select({ count = 1 })
+    end, { buffer = ev.buf, desc = "Next Copilot suggestion" })
+    vim.keymap.set("i", "<M-[>", function()
+      vim.lsp.inline_completion.select({ count = -1 })
+    end, { buffer = ev.buf, desc = "Prev Copilot suggestion" })
+  end,
+})
